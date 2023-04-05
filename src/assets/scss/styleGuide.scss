@@ -1,0 +1,26 @@
+@import "normalize.css";
+
+// Common Colors
+:root {
+  --primary: #434ce8;
+  --secondary: #ecf3fe;
+  --background: #fdfcff;
+  --white: #ffffff;
+  --border: #c7cae4;
+  --fontColor: #555555;
+}
+
+// font-size and font-weight
+:root {
+  --title: 40px;
+  --heading1: 32px;
+  --heading2: 24px;
+  --large: 18px;
+  --medium: 16px;
+  --small: 12px;
+
+  --thin: 100;
+  --light: 300;
+  --regular: 400;
+  --bold: 700;
+}

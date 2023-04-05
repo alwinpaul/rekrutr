@@ -1,0 +1,20 @@
+.menu-body {
+  width: 100%;
+  position: relative;
+}
+
+.actions-sc {
+  display: flex;
+  flex-direction: column;
+  height: 80px;
+  align-items: flex-start;
+  justify-content: space-evenly;
+  position: absolute;
+  top: 85%;
+  margin-left: 10px;
+}
+
+.l-menu-list {
+  list-style-type: none;
+  font-weight: var(--normal);
+}
