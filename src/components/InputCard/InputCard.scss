@@ -1,0 +1,25 @@
+.card-container {
+  display: flex;
+  align-items: flex-start;
+  padding: 10px;
+  margin: 30px 10px;
+  border-left: 1px solid var(--primary-lite);
+  align-items: center;
+  .card-info {
+    width: 30%;
+    .card-name {
+      font-size: var(--medium);
+      font-weight: bold;
+    }
+    .card-desc {
+      font-size: var(--small);
+    }
+  }
+  .card-body {
+    width: 600px;
+    padding: 0 5px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+}

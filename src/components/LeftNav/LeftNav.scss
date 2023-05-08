@@ -18,3 +18,7 @@
   list-style-type: none;
   font-weight: var(--normal);
 }
+
+.active {
+  background-color: var(--nav-background) !important;
+}

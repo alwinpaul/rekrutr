@@ -1,0 +1,98 @@
+.candidate-box {
+    width: 550px;
+    height: 120px;
+    border: 1px solid #ddd;
+    border-radius: 15px;
+    padding: 5px;
+    margin: 10px;
+    overflow: hidden;
+    background-color: #fff;
+    box-shadow: 1px 0px 5px 2px #ddd;
+
+    .cb-top {
+        height: 65px;
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        margin: 10px;
+    }
+
+    .cb-t-name-box {
+        width: 70%;
+
+        .cb-t-name {
+            font-size: var(--medium);
+            color: var(--primary);
+            line-height: 22px;
+        }
+
+        .cb-t-designation {
+            font-weight: bold;
+            line-height: 22px;
+
+            .cb-t-exp {
+                display: inline-block;
+                width: 100px;
+                margin-left: 5px;
+            }
+        }
+    }
+
+    .cb-t-job-box {
+        width: 30%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-direction: column;
+    }
+
+    .cb-t-small {
+        font-size: var(--small);
+        margin: 3px 0;
+        line-height: 10px;
+    }
+
+    .cb-bottom {
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        border-top: 1px solid #ddd;
+    }
+
+    .cb-b-technology {
+        width: 80%;
+        font-size: var(--small);
+        margin: 10px 5px;
+    }
+
+    .cb-b-sub-chip {
+        background-color: #ddd;
+        border-radius: 10px;
+        padding: 2px 5px;
+        margin: 0 3px;
+        font-size: var(--small);
+    }
+
+    .cb-b-action {
+        width: 20%;
+    }
+
+    .cb-emp_chip {
+        padding: 5px 10px;
+        background-color: var(--yellow-border);
+        color: #000;
+        border-radius: 10px;
+        display: inline-block;
+        margin: 3px;
+    }
+
+    .cb-role_chip {
+        padding: 5px 10px;
+        background-color: var(--nav-background);
+        color: #000;
+        border-radius: 10px;
+        display: inline-block;
+        margin: 3px;
+    }
+}

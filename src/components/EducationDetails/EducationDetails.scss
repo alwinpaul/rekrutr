@@ -1,0 +1,28 @@
+.edu-box {
+  border-left: 1px solid var(--primary-lite);
+  padding: 20px;
+  //   border-radius: 15px;
+  margin: 30px 20px;
+}
+
+.edu-view-box {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-direction: column;
+  .del-icon {
+    float: right;
+  }
+  .edu-item {
+    width: 700px;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px 0;
+    .grad_yr {
+      font-size: var(--small);
+    }
+    .deg_name {
+      font-weight: bold;
+    }
+  }
+}

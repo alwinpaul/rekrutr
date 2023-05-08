@@ -5,7 +5,12 @@ import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
 
 import TabPanel from "./../../components/TabPanel/TabPanel";
+import PersonalDetails from "./../../components/PersonalDetails/PersonalDetails";
+import EducationDetails from "./../../components/EducationDetails/EducationDetails";
+import ProfessionalDetails from "./../../components/ProfessionalDetails/ProfessionalDetails";
+import UploadResume from "./../../components/UploadResume/UploadResume";
 
+import { CANDIDATE_TABS } from "./../../common/constants";
 import "./AddCandidate.scss";
 
 const AddCandidate = () => {
@@ -37,22 +42,22 @@ const AddCandidate = () => {
         </div>
       </div>
       <div className="tab-body">
-        <TabPanel value={tabValue} index={0}>
-          Persoanl Details
+        <TabPanel value={tabValue} index={0} {...CANDIDATE_TABS.personal}>
+          <PersonalDetails />
         </TabPanel>
-        <TabPanel value={tabValue} index={1}>
-          Education Details
+        <TabPanel value={tabValue} index={1} {...CANDIDATE_TABS.education}>
+          <EducationDetails />
         </TabPanel>
-        <TabPanel value={tabValue} index={2}>
-          Professional Details
+        <TabPanel value={tabValue} index={2} {...CANDIDATE_TABS.professional}>
+          <ProfessionalDetails />
         </TabPanel>
-        <TabPanel value={tabValue} index={3}>
-          Resume upload
+        <TabPanel value={tabValue} index={3} {...CANDIDATE_TABS.resume}>
+          <UploadResume />
         </TabPanel>
-        <TabPanel value={tabValue} index={4}>
+        <TabPanel value={tabValue} index={4} {...CANDIDATE_TABS.skills}>
           Add Skills
         </TabPanel>
-        <TabPanel value={tabValue} index={5}>
+        <TabPanel value={tabValue} index={5} {...CANDIDATE_TABS.preferences}>
           Preferences
         </TabPanel>
       </div>

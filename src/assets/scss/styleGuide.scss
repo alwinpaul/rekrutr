@@ -2,12 +2,15 @@
 
 // Common Colors
 :root {
-  --primary: #434ce8;
+  --primary: #4169e1;
+  --primary-lite: #1976d2;
   --secondary: #ecf3fe;
-  --background: #fdfcff;
+  --background: #efefef;
   --white: #ffffff;
   --border: #c7cae4;
   --fontColor: #555555;
+  --nav-background: #dbe2ff;
+  --yellow-border: #ffb100;
 }
 
 // font-size and font-weight
@@ -17,6 +20,7 @@
   --heading2: 24px;
   --large: 18px;
   --medium: 16px;
+  --sm: 14px;
   --small: 12px;
 
   --thin: 100;

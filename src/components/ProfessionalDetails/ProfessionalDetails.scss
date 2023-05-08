@@ -1,0 +1,24 @@
+.exp-view-box {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-direction: column;
+  .del-icon {
+    float: right;
+  }
+  .exp-item {
+    width: 700px;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px 0;
+    .grad_yr {
+      font-size: var(--small);
+    }
+    .designation_name {
+      font-weight: bold;
+    }
+    .wrk-desc {
+      padding-top: 15px;
+    }
+  }
+}

@@ -6,20 +6,24 @@ import CandidateHome from "./../CandidateHome/CandidateHome";
 import "./MainBody.scss";
 
 const MainBody = () => {
+  // var isActive = this.context.router.route.location.pathname === this.props.to;
+  //       var className = isActive ? 'active' : '';
+  console.log(Route);
+
   return (
     <div className="main-body">
-      <div className="left-nav">
-        <LeftNav />
-      </div>
-      <div className="route-wrapper">
-        <BrowserRouter>
+      <BrowserRouter>
+        <div className="left-nav">
+          <LeftNav />
+        </div>
+        <div className="route-wrapper">
           <Routes>
             <Route path="/" element={<HomeView />} />
             <Route path="/candidates//*" element={<CandidateHome />} />
             <Route path="/jobs" element={<CandidateHome />} />
           </Routes>
-        </BrowserRouter>
-      </div>
+        </div>
+      </BrowserRouter>
     </div>
   );
 };

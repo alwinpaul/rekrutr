@@ -4,3 +4,20 @@
 .btn-icon {
   margin: 3px 7px;
 }
+.tab-container {
+  margin: 5px 10px;
+  .tab-desc {
+    margin: 10px 0;
+    border-bottom: 1px solid #eee;
+  }
+  .tab-title {
+    font-size: 20px;
+  }
+  .tab-detail-short {
+    font-size: 12px;
+  }
+}
+
+.input-field {
+  margin-left: 5px;
+}
