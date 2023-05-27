@@ -18,7 +18,7 @@ import {
 } from "./../../common/interfaces/candidateInterface";
 
 import "./AddCandidateBasic.scss";
-import { addCandidateDetails } from "../../store/thunks/candidateThunks";
+import { addCandidateDetails, uploadResumeFile } from "../../store/thunks/candidateThunks";
 import Autocomplete from "@mui/material/Autocomplete";
 import { useSelector } from "react-redux";
 import { CandidateState } from "../../store/reducers/candidateSlice";
@@ -107,7 +107,7 @@ const newCandidateSchema = Yup.object().shape({
 interface AddCandidateBasicProps { }
 
 const AddCandidateBasic = (props: AddCandidateBasicProps) => {
-	const [fileName, setFileName] = useState("");
+	const [resumeFile, setResumeFile] = useState<File | undefined>();
 	const [successAlert, setSuccessAlert] = useState(false);
 	const [initialValue, setInitiaValue] = useState(defaultFormValue);
 
@@ -143,6 +143,14 @@ const AddCandidateBasic = (props: AddCandidateBasicProps) => {
 
 	const handleAutoCompleteChange = (event: any, val: any, targetName: string) => {
 		formik.setFieldValue(targetName, [...val]);
+	}
+
+	const handleFileUpload = (e: any) => {
+		if (resumeFile) {
+			dispatch(uploadResumeFile(resumeFile)).then((resp) => {
+				console.log(resp)
+			})
+		}
 	}
 
 
@@ -679,15 +687,15 @@ const AddCandidateBasic = (props: AddCandidateBasicProps) => {
 								type="file"
 								onChange={(e) => {
 									if (!e.target.files) return;
-									setFileName(e.target.files[0].name);
+									setResumeFile(e.target.files[0]);
 								}}
 							/>
 						</Button>
 						<div className="file-type-name">DOC, DOCX, PDF, TXT</div>
-						{fileName && (
+						{resumeFile && (
 							<>
-								<div className="upload-file-name">{fileName}</div>
-								<Button variant="contained" component="label">
+								<div className="upload-file-name">{resumeFile.name}</div>
+								<Button variant="contained" component="label" onClick={handleFileUpload}>
 									Upload
 								</Button>
 							</>

@@ -112,6 +112,17 @@ async function fetchConfig() {
     return response && response.data;
 }
 
+export const uploadResumeFile = createAsyncThunk(
+    "candidate/uploadResume",
+    async (resumeFile: File, thunkAPI) => {
+        const formData = new FormData();
+        formData.append("resumeFile", resumeFile, resumeFile.name);
+        const response = await post(apiUrls.UPLOAD_RESUME, formData);
+        console.log(response)
+        return response?.data;
+    }
+);
+
 // const createComment = (text: string): Comment => ({
 //     text,
 // });

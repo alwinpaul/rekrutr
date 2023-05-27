@@ -1,3 +1,7 @@
+.copy-text-field {
+  cursor: copy;
+}
+
 .candidate-detail-container {
   width: 100%;
   padding: 10px 20px;
@@ -183,5 +187,17 @@
 
   .cdb-download-btn-text {
     margin-right: 5px;
+  }
+}
+
+.cdb-comment-section {
+  .cdb-comment-add {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+  }
+
+  .comment-field {
+    width: 450px;
   }
 }

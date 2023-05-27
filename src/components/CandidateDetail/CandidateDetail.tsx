@@ -9,9 +9,16 @@ import CampaignRoundedIcon from '@mui/icons-material/CampaignRounded';
 import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownRounded';
 import KeyboardArrowUpRoundedIcon from '@mui/icons-material/KeyboardArrowUpRounded';
 import CloudDownloadRoundedIcon from '@mui/icons-material/CloudDownloadRounded';
+import SendRoundedIcon from '@mui/icons-material/SendRounded';
+import Tooltip from '@mui/material/Tooltip';
+import ClickAwayListener from '@mui/material/ClickAwayListener';
 
 import "./CandidateDetail.scss";
 import { useState } from "react";
+import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
+import Stack from "@mui/material/Stack";
+import Button from "@mui/material/Button";
 
 interface CandidateDetailProps {
 	candidate: CandidateDetail | null;
@@ -20,6 +27,9 @@ interface CandidateDetailProps {
 const CandidateDetailComponent = (props: CandidateDetailProps) => {
 	let candidate = props.candidate;
 	const [expandCandidateStatus, setExpandCandidateStatus] = useState(false);
+	const [commentValue, setCommentValue] = useState("");
+	const [openPhoneCopyToolTip, setPhoneOpenCopyTooltip] = useState(false);
+	const [openEmailCopyToolTip, setEmailOpenCopyTooltip] = useState(false);
 
 	let { candidates, visaStatus, employmentTypes, roles, skills, salaryUnits, industryVerticals } = useSelector(
 		(state: RootState) => state.candidates
@@ -58,6 +68,20 @@ const CandidateDetailComponent = (props: CandidateDetailProps) => {
 		setExpandCandidateStatus(!expandCandidateStatus)
 	}
 
+	const copyText = (field: string, text: any) => {
+		navigator.clipboard.writeText(text)
+		let actionFn = (action: boolean) => { };
+		if (field === "phone") {
+			actionFn = setPhoneOpenCopyTooltip;
+		} else if (field === "email") {
+			actionFn = setEmailOpenCopyTooltip;
+		}
+		actionFn(true);
+		setTimeout(() => {
+			actionFn(false);
+		}, 1000);
+	}
+
 	const getStatusView = (candidate: CandidateDetail) => {
 		return (
 			<>
@@ -75,6 +99,10 @@ const CandidateDetailComponent = (props: CandidateDetailProps) => {
 				</div>
 			</>
 		)
+	}
+
+	const handleAddComment = (candidateId: any) => {
+		console.log(commentValue)
 	}
 
 	return (
@@ -104,8 +132,40 @@ const CandidateDetailComponent = (props: CandidateDetailProps) => {
 							</div>
 						</div>
 						<div className="cdb-contact-box">
-							<div className="cbd-con-itm cdb-phone"><CallRoundedIcon /><div className="cdb-con-item-text">{candidate.phone}</div></div>
-							<div className="cbd-con-itm cdb-email"><AlternateEmailRoundedIcon /><div className="cdb-con-item-text">{candidate.email}</div></div>
+							<div className="cbd-con-itm cdb-phone">
+								<CallRoundedIcon />
+								<Tooltip
+									PopperProps={{
+										disablePortal: true,
+									}}
+									open={openPhoneCopyToolTip}
+									disableFocusListener
+									disableHoverListener
+									disableTouchListener
+									title="Phone Number copied"
+								>
+									<div className="cdb-con-item-text copy-text-field" onClick={() => copyText("phone", candidate?.phone)}>
+										{candidate.phone}
+									</div>
+								</Tooltip>
+							</div>
+							<div className="cbd-con-itm cdb-email">
+								<AlternateEmailRoundedIcon />
+								<Tooltip
+									PopperProps={{
+										disablePortal: true,
+									}}
+									open={openEmailCopyToolTip}
+									disableFocusListener
+									disableHoverListener
+									disableTouchListener
+									title="Email copied"
+								>
+									<div className="cdb-con-item-text copy-text-field" onClick={() => copyText("email", candidate?.email)}>
+										{candidate.email}
+									</div>
+								</Tooltip>
+							</div>
 							<div className="cbd-con-itm cdb-location"><PersonPinCircleRoundedIcon /><div className="cdb-con-item-text">{candidate.location}</div></div>
 						</div>
 					</div>
@@ -132,6 +192,31 @@ const CandidateDetailComponent = (props: CandidateDetailProps) => {
 						<div className="cdb-sum-box cdb-sec-box">
 							<div className="cbd-sec-title">Job Summary</div>
 							<div className="sdb-sec-text">{candidate.summary}</div>
+						</div>
+					</div>
+
+					<div className="cdb-comment-section">
+						<div className="cdb-comment-add">
+							<TextField
+								className="comment-field"
+								id="user_comment"
+								label="User Comment"
+								variant="outlined"
+								fullWidth
+								multiline
+								rows={4}
+								name="user_comment"
+								value={commentValue}
+								onChange={(e) => setCommentValue(e.target.value)}
+							/>
+							<Stack spacing={5} direction="row" justifyContent="center">
+								<Button size="large" variant="contained" onClick={() => handleAddComment(candidate?.id)}>
+									<SendRoundedIcon />
+								</Button>
+							</Stack>
+						</div>
+						<div className="cdb-comment-view">
+							<div className="cdb-comment-box"></div>
 						</div>
 					</div>
 				</>
