@@ -31,7 +31,7 @@ const CandidateDetailComponent = (props: CandidateDetailProps) => {
 	const [openPhoneCopyToolTip, setPhoneOpenCopyTooltip] = useState(false);
 	const [openEmailCopyToolTip, setEmailOpenCopyTooltip] = useState(false);
 
-	let { candidates, visaStatus, employmentTypes, roles, skills, salaryUnits, industryVerticals } = useSelector(
+	let { candidates, visaStatus, employmentTypes, roles, skills, salaryUnits, industryVerticals, technologies } = useSelector(
 		(state: RootState) => state.candidates
 	);
 	const visaStatusMap = (id: number) => {
@@ -46,8 +46,12 @@ const CandidateDetailComponent = (props: CandidateDetailProps) => {
 		return industryVerticals.filter((elem: StatusObj) => elem.value && verticals.includes(elem.value))
 	}
 
-	const rolesMap = (items: string[]) => {
-		return roles.filter((elem: StatusObj) => elem.value && items.includes(elem.value))
+	const rolesMap = (items: number[]) => {
+		return roles.filter((elem: StatusObj) => elem.id && items.includes(elem.id))
+	}
+
+	const technologiesMap = (items: number[]) => {
+		return technologies.filter((elem: StatusObj) => elem.id && items.includes(elem.id))
 	}
 
 	const skillsMap = (items: string[]) => {
@@ -166,7 +170,7 @@ const CandidateDetailComponent = (props: CandidateDetailProps) => {
 									</div>
 								</Tooltip>
 							</div>
-							<div className="cbd-con-itm cdb-location"><PersonPinCircleRoundedIcon /><div className="cdb-con-item-text">{candidate.location}</div></div>
+							<div className="cbd-con-itm cdb-location"><PersonPinCircleRoundedIcon /><div className="cdb-con-item-text">{candidate.location.description}</div></div>
 						</div>
 					</div>
 
@@ -180,6 +184,7 @@ const CandidateDetailComponent = (props: CandidateDetailProps) => {
 					<div className="cdb-skills-box">
 						<div className="cdb-sk-status cdb-sec-box"><div className="cbd-sec-title">Employment Type :</div> {employmentTypeMap(candidate.employmentTypes).map((elem, index) => (<div key={index} className=" cdb-chip cdb-emp-sts-chip">{elem.value}</div>))}</div>
 						<div className="cdb-sk-status cdb-sec-box"><div className="cbd-sec-title">Industry Verticals :</div> {industryVerticalsMap(candidate.industryVerticals).map((elem, index) => (<div key={index} className=" cdb-chip cdb-sks-sts-chip">{elem.value}</div>))}</div>
+						<div className="cdb-sk-status cdb-sec-box"><div className="cbd-sec-title">Technologies :</div> {technologiesMap(candidate.technologies).map((elem, index) => (<div key={index} className=" cdb-chip cdb-sks-sts-chip">{elem.value}</div>))}</div>
 						<div className="cdb-sk-status cdb-sec-box"><div className="cbd-sec-title">Roles :</div> {rolesMap(candidate.roles).map((elem, index) => (<div key={index} className=" cdb-chip cdb-sks-sts-chip">{elem.value}</div>))}</div>
 						<div className="cdb-sk-status cdb-sec-box"><div className="cbd-sec-title">Skills :</div> {skillsMap(candidate.skills).map((elem, index) => (<div key={index} className=" cdb-chip cdb-sks-sts-chip">{elem.value}</div>))}</div>
 					</div>

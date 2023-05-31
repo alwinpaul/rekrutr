@@ -14,10 +14,11 @@ export interface CandidateDetail {
 	noticePeriod: number;
 	salaryExpectations: salaryExpectations[];
 	employmentTypes: number[];
-	location: string;
+	location: Location;
 	resumeUrl: string;
 	comments: Array<Comment>;
-	roles: string[];
+	technologies: number[];
+	roles: number[];
 	skills: string[];
 	candidateStatus?: string[];
 }
@@ -25,6 +26,13 @@ export interface CandidateDetail {
 export interface StatusObj {
 	id?: number;
 	value: any;
+	created_at?: string;
+}
+
+export interface RolesObj {
+	id?: number;
+	value: any;
+	technologyId: number
 	created_at?: string;
 }
 
@@ -40,4 +48,16 @@ export interface salaryExpectations {
 	value: number;
 	unit: string;
 	timestamp?: string;
+}
+
+export interface Location {
+	id?: number;
+	city?: string;
+	province_state?: string;
+	country?: string;
+	timestamp?: string;
+	description: string;
+	lat?: string;
+	long?: string;
+	placeId?: string;
 }

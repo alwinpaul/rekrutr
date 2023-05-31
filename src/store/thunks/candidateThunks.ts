@@ -22,6 +22,7 @@ const createCandidateData = (candidateDetails: CandidateDetail) => {
         employmentTypes,
         location,
         resumeUrl,
+        technologies,
         skills,
         roles
     } = candidateDetails;
@@ -44,11 +45,13 @@ const createCandidateData = (candidateDetails: CandidateDetail) => {
         notice_period_days: noticePeriod,
         salary_expectations: salaryExpectations,
         employment_types: employmentTypes,
-        current_location: location,
+        location,
         resume_url: "http://www.google.com",
         comments,
+        technologies,
         skills,
-        roles
+        roles,
+        userId: "a5cad496-b34a-46d2-97ba-1d396ae8903f"
     };
 
     return candidateData;
@@ -86,8 +89,9 @@ export const getCandidateDetails = createAsyncThunk(
                 noticePeriod: candidateDetail.notice_period_days,
                 salaryExpectations: candidateDetail.salary_expectations,
                 employmentTypes: candidateDetail.employment_types,
-                location: candidateDetail.current_location,
+                location: candidateDetail.location,
                 resumeUrl: candidateDetail.resume_url,
+                technologies: candidateDetail.technologies,
                 roles: candidateDetail.roles,
                 skills: candidateDetail.skills,
                 comments: candidateDetail.comments,

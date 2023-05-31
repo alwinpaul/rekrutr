@@ -17,7 +17,7 @@ export default function CandidateCard(props: CandidateCardProps) {
 
     const dispatch = useAppDispatch();
 
-    let { employmentTypes, roles } = useSelector(
+    let { employmentTypes, roles, technologies } = useSelector(
         (state: RootState) => state.candidates
     );
 
@@ -25,8 +25,12 @@ export default function CandidateCard(props: CandidateCardProps) {
         return employmentTypes.filter((elem: StatusObj) => elem.id && ids.includes(elem.id))
     }
 
-    const roleseMap = (selectedRoles: string[]) => {
-        return roles.filter((elem: StatusObj) => elem.value && selectedRoles.includes(elem.value))
+    const roleseMap = (selectedRoles: number[]) => {
+        return roles.filter((elem: StatusObj) => elem.id && selectedRoles.includes(elem.id))
+    }
+
+    const technologyMap = (selectedTechnologies: number[]) => {
+        return technologies.filter((elem: StatusObj) => elem.id && selectedTechnologies.includes(elem.id))
     }
 
     const handleCanidateSelect = (candidate: CandidateDetail) => {
@@ -48,7 +52,7 @@ export default function CandidateCard(props: CandidateCardProps) {
                         </div>
                     </div>
                     <div className="cb-t-small cb-t-location">
-                        {candidate.location}
+                        {candidate.location.description}
                     </div>
                 </div>
                 <div className="cb-t-job-box">
@@ -68,11 +72,11 @@ export default function CandidateCard(props: CandidateCardProps) {
             </div>
             <div className="cb-bottom">
                 <div className="cb-b-technology">
-                    <div className="cb-b-tec-val">Roles:
-                        {roleseMap(candidate.roles).map((et: any, index: number) => index < 2 && (
+                    <div className="cb-b-tec-val">Technologies:
+                        {technologyMap(candidate.technologies).map((et: any, index: number) => index < 2 && (
                             <div className="cb-role_chip" key={`et${index}`}>{et.value}</div>
                         ))}
-                        {(roleseMap(candidate.roles).length > 2) && (` +${roleseMap(candidate.roles).length - 2}`)}
+                        {(technologyMap(candidate.technologies).length > 2) && (` +${technologyMap(candidate.technologies).length - 2}`)}
                     </div>
                 </div>
                 <div className="cb-b-action">

@@ -11,17 +11,19 @@ import Button from "@mui/material/Button";
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 import FileUploadOutlinedIcon from "@mui/icons-material/FileUploadOutlined";
-
+import apiUrls from "./../../common/apiUrls"
 
 import {
 	CandidateDetail,
 } from "./../../common/interfaces/candidateInterface";
+import LocationField from "./../../components/LocationField/LocationField";
 
 import "./AddCandidateBasic.scss";
 import { addCandidateDetails, uploadResumeFile } from "../../store/thunks/candidateThunks";
 import Autocomplete from "@mui/material/Autocomplete";
 import { useSelector } from "react-redux";
 import { CandidateState } from "../../store/reducers/candidateSlice";
+import axios from "axios";
 
 const phoneRegExp = /^\d{10}$/;
 
@@ -34,10 +36,17 @@ const defaultFormValue: CandidateDetail = {
 	industryVerticals: [],
 	expertise: "",
 	summary: "",
-	location: "",
+	location: {
+		city: "",
+		province_state: "",
+		country: "",
+		description: "",
+		placeId: ""
+	},
 	noticePeriod: 0,
 	expYears: 1,
 	expMonths: 1,
+	technologies: [],
 	roles: [],
 	skills: [],
 	visaStatus: 1,
@@ -79,10 +88,10 @@ const newCandidateSchema = Yup.object().shape({
 		.min(2, "Too Short!")
 		.max(600, "Too Long!")
 		.required("Required"),
-	location: Yup.string()
-		.min(2, "Too Short!")
-		.max(50, "Too Long!")
-		.required("Required"),
+	location: Yup.object({
+		description: Yup.string().required('Required'),
+		placeId: Yup.string()
+	}),
 	noticePeriod: Yup.number()
 		.min(0, "Too Short!")
 		.max(90, "Too Long!")
@@ -90,6 +99,8 @@ const newCandidateSchema = Yup.object().shape({
 	expYears: Yup.number().required("Required"),
 	expMonths: Yup.number().required("Required"),
 	roles: Yup.array()
+		.min(1, "Required"),
+	technologies: Yup.array()
 		.min(1, "Required"),
 	skills: Yup.array()
 		.min(1, "Required"),
@@ -105,6 +116,8 @@ const newCandidateSchema = Yup.object().shape({
 });
 
 interface AddCandidateBasicProps { }
+
+
 
 const AddCandidateBasic = (props: AddCandidateBasicProps) => {
 	const [resumeFile, setResumeFile] = useState<File | undefined>();
@@ -152,6 +165,18 @@ const AddCandidateBasic = (props: AddCandidateBasicProps) => {
 			})
 		}
 	}
+
+	const handleLocationChange = (locationValue: any) => {
+		console.log(locationValue)
+		if (!locationValue) {
+			return
+		}
+		formik.setFieldValue("location", {
+			description: locationValue.description,
+			placeId: locationValue.place_id
+		})
+	}
+
 
 
 	return (
@@ -331,7 +356,6 @@ const AddCandidateBasic = (props: AddCandidateBasicProps) => {
 								multiple
 								options={candidateState.industryVerticals.map(op => op.value)}
 								filterSelectedOptions
-								freeSolo
 								value={formik.values.industryVerticals}
 								onBlur={formik.handleBlur}
 								renderInput={(params) => (
@@ -358,7 +382,7 @@ const AddCandidateBasic = (props: AddCandidateBasicProps) => {
 						</Box>
 					</InputCard>
 
-					<InputCard name="Roles">
+					<InputCard name="Technology">
 						<Box
 							component="div"
 							sx={{
@@ -367,34 +391,75 @@ const AddCandidateBasic = (props: AddCandidateBasicProps) => {
 						>
 							<Autocomplete
 								multiple
-								options={candidateState.roles.map(op => op.value)}
+								options={candidateState.technologies.map(op => op.id)}
+								getOptionLabel={(option) => candidateState.technologies.find(elem => elem.id === option)?.value}
 								filterSelectedOptions
-								freeSolo
-								value={formik.values.roles}
+								value={formik.values.technologies}
 								onBlur={formik.handleBlur}
 								renderInput={(params) => (
 									<TextField
 										{...params}
-										label="Roles"
+										label="technologies"
 										placeholder="Start typing to filter suggestions"
-										name="roles"
-										id="roles"
+										name="technologies"
+										id="technologies"
 										error={
-											Boolean(formik.touched.roles &&
-												formik.errors.roles)
+											Boolean(formik.touched.technologies &&
+												formik.errors.technologies)
 										}
 										onBlur={formik.handleBlur}
-										value={formik.values.roles}
+										value={formik.values.technologies}
 										helperText={
-											formik.touched.roles &&
-											formik.errors.roles
+											formik.touched.technologies &&
+											formik.errors.technologies
 										}
 									/>
 								)}
-								onChange={(e, newVal) => handleAutoCompleteChange(e, newVal, "roles")}
+								onChange={(e, newVal) => handleAutoCompleteChange(e, newVal, "technologies")}
 							/>
 						</Box>
 					</InputCard>
+
+					{formik.values.technologies.length > 0 && (
+						<InputCard name="Roles">
+							<Box
+								component="div"
+								sx={{
+									"& > :not(style)": { mr: 1, width: "61ch" },
+								}}
+							>
+								<Autocomplete
+									multiple
+									options={candidateState.roles.filter(op => (formik.values.technologies.includes(op.technologyId))).map(op => op.id)}
+									getOptionLabel={(option) => candidateState.roles.find(elem => elem.id === option)?.value}
+									filterSelectedOptions
+									value={formik.values.roles}
+									onBlur={formik.handleBlur}
+									renderInput={(params) => (
+										<TextField
+											{...params}
+											label="Roles"
+											placeholder="Start typing to filter suggestions"
+											name="roles"
+											id="roles"
+											error={
+												Boolean(formik.touched.roles &&
+													formik.errors.roles)
+											}
+											onBlur={formik.handleBlur}
+											value={formik.values.roles}
+											helperText={
+												formik.touched.roles &&
+												formik.errors.roles
+											}
+										/>
+									)}
+									onChange={(e, newVal) => handleAutoCompleteChange(e, newVal, "roles")}
+								/>
+							</Box>
+						</InputCard>
+					)}
+
 
 					<InputCard name="Skills">
 						<Box
@@ -495,7 +560,7 @@ const AddCandidateBasic = (props: AddCandidateBasicProps) => {
 								"& > :not(style)": { mr: 1, width: "61ch" },
 							}}
 						>
-							<TextField
+							{/* <TextField
 								className="input-field"
 								id="location"
 								label="Current Location"
@@ -503,13 +568,14 @@ const AddCandidateBasic = (props: AddCandidateBasicProps) => {
 								fullWidth
 								name="location"
 								error={
-									formik.touched.location && Boolean(formik.errors.location)
+									formik.touched.location?.country && Boolean(formik.errors.location?.country)
 								}
-								helperText={formik.touched.location && formik.errors.location}
+								helperText={formik.touched.location?.country && formik.errors.location?.country}
 								value={formik.values.location}
-								onChange={formik.handleChange}
+								onChange={handleLocationAutoComplete}
 								onBlur={formik.handleBlur}
-							/>
+							/> */}
+							<LocationField locationChange={handleLocationChange}></LocationField>
 						</Box>
 					</InputCard>
 
@@ -581,6 +647,7 @@ const AddCandidateBasic = (props: AddCandidateBasicProps) => {
 								sx={{
 									"& > :not(style)": { mr: 1, width: "30ch" },
 								}}
+								key={`ie-${index}`}
 							>
 								<TextField
 									className="input-field"

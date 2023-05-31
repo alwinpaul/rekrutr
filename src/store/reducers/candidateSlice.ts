@@ -1,12 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { CandidateDetail, StatusObj } from "./../../common/interfaces/candidateInterface";
+import { RolesObj, CandidateDetail, StatusObj } from "./../../common/interfaces/candidateInterface";
 import { addCandidateDetails, getCandidateDetails, getConfig } from "../thunks/candidateThunks";
 
 export interface CandidateState {
 	candidates: CandidateDetail[];
 	visaStatus: StatusObj[];
 	employmentTypes: StatusObj[];
-	roles: StatusObj[];
+	technologies: StatusObj[];
+	roles: RolesObj[];
 	skills: StatusObj[];
 	salaryUnits: string[];
 	industryVerticals: StatusObj[];
@@ -17,6 +18,7 @@ const initialState = {
 	candidates: [],
 	visaStatus: [],
 	employmentTypes: [],
+	technologies: [],
 	roles: [],
 	skills: [],
 	salaryUnits: [],
@@ -42,6 +44,7 @@ export const candidateSlice = createSlice({
 		builder.addCase(getConfig.fulfilled, (state, action) => {
 			state.visaStatus = [...action.payload.visa_status];
 			state.employmentTypes = [...action.payload.employment_types];
+			state.technologies = [...action.payload.technologies];
 			state.roles = [...action.payload.roles];
 			state.skills = [...action.payload.skills];
 			state.salaryUnits = [...action.payload.salary_units];
