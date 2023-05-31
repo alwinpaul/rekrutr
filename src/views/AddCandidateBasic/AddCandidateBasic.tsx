@@ -313,7 +313,7 @@ const AddCandidateBasic = (props: AddCandidateBasicProps) => {
 								onBlur={formik.handleBlur}
 							>
 								{[...Array(100)].map((option, index) => (
-									<MenuItem key={index} value={index + 1}>
+									<MenuItem key={index} value={index}>
 										{index} {`year${index > 1 ? "s" : ""}`}
 									</MenuItem>
 								))}
