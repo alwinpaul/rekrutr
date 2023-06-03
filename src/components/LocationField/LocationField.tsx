@@ -7,10 +7,11 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import parse from 'autosuggest-highlight/parse';
 import { debounce } from '@mui/material/utils';
+import { GOOGLE_MAPS_API_KEY } from "./../../common/settings";
 
 // This key was created specifically for the demo in mui.com.
 // You need to create a new one for your application.
-const GOOGLE_MAPS_API_KEY = process.env.REACT_APP_GA_PLACES_API;
+
 
 function loadScript(src: string, position: HTMLElement | null, id: string) {
     if (!position) {
@@ -45,7 +46,6 @@ export default function LocationField(props: any) {
     const [inputValue, setInputValue] = React.useState('');
     const [options, setOptions] = React.useState<readonly PlaceType[]>([]);
     const loaded = React.useRef(false);
-    console.log(process.env)
     if (typeof window !== 'undefined' && !loaded.current) {
         if (!document.querySelector('#google-maps')) {
             loadScript(
