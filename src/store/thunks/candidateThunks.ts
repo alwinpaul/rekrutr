@@ -51,7 +51,7 @@ const createCandidateData = (candidateDetails: CandidateDetail) => {
         technologies,
         skills,
         roles,
-        userId: "a5cad496-b34a-46d2-97ba-1d396ae8903f"
+        userId: "80aa41a0-973a-4b39-8a5c-890bd3bc9aae"
     };
 
     return candidateData;
