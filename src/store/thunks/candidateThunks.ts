@@ -46,7 +46,7 @@ const createCandidateData = (candidateDetails: CandidateDetail) => {
         salary_expectations: salaryExpectations,
         employment_types: employmentTypes,
         location,
-        resume_url: "http://www.google.com",
+        resume_url: resumeUrl,
         comments,
         technologies,
         skills,

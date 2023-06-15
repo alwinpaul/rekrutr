@@ -161,7 +161,12 @@ const AddCandidateBasic = (props: AddCandidateBasicProps) => {
 	const handleFileUpload = (e: any) => {
 		if (resumeFile) {
 			dispatch(uploadResumeFile(resumeFile)).then((resp) => {
-				console.log(resp)
+				if (resp.type === 'candidate/uploadResume/fulfilled') {
+					formik.setFieldValue("resumeUrl", resp.payload.url)
+				} else {
+					alert("Resume upload failed")
+				}
+				console.log(resp.payload.url)
 			})
 		}
 	}
