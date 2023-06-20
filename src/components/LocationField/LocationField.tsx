@@ -9,9 +9,6 @@ import parse from 'autosuggest-highlight/parse';
 import { debounce } from '@mui/material/utils';
 import { GOOGLE_MAPS_API_KEY } from "./../../common/settings";
 
-// This key was created specifically for the demo in mui.com.
-// You need to create a new one for your application.
-
 
 function loadScript(src: string, position: HTMLElement | null, id: string) {
     if (!position) {
