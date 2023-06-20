@@ -11,6 +11,7 @@ import Button from "@mui/material/Button";
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 import FileUploadOutlinedIcon from "@mui/icons-material/FileUploadOutlined";
+import CloudDoneRoundedIcon from '@mui/icons-material/CloudDoneRounded';
 import apiUrls from "./../../common/apiUrls"
 
 import {
@@ -122,6 +123,8 @@ interface AddCandidateBasicProps { }
 const AddCandidateBasic = (props: AddCandidateBasicProps) => {
 	const [resumeFile, setResumeFile] = useState<File | undefined>();
 	const [successAlert, setSuccessAlert] = useState(false);
+	const [resumeUploadStatus, setResumeUploadStatus] = useState(false);
+	const [disableSave, setDisableSave] = useState(false);
 	const [initialValue, setInitiaValue] = useState(defaultFormValue);
 
 	let candidateState: CandidateState = useSelector(
@@ -158,14 +161,17 @@ const AddCandidateBasic = (props: AddCandidateBasicProps) => {
 	}
 
 	const handleFileUpload = (e: any) => {
+		setResumeUploadStatus(false);
 		if (resumeFile) {
+			setDisableSave(true);
 			dispatch(uploadResumeFile(resumeFile)).then((resp) => {
 				if (resp.type === 'candidate/uploadResume/fulfilled') {
 					formik.setFieldValue("resumeUrl", resp.payload.url)
+					setResumeUploadStatus(true);
 				} else {
 					alert("Resume upload failed")
 				}
-				console.log(resp.payload.url)
+				setDisableSave(false);
 			})
 		}
 	}
@@ -764,7 +770,10 @@ const AddCandidateBasic = (props: AddCandidateBasicProps) => {
 						<div className="file-type-name">DOC, DOCX, PDF, TXT</div>
 						{resumeFile && (
 							<>
-								<div className="upload-file-name">{resumeFile.name}</div>
+								<div className="upload-file-name">{resumeFile.name}
+									{(resumeUploadStatus &&
+										<CloudDoneRoundedIcon color="success" className="upload-icon-success" />
+									)}</div>
 								<Button variant="contained" component="label" onClick={handleFileUpload}>
 									Upload
 								</Button>
@@ -773,7 +782,7 @@ const AddCandidateBasic = (props: AddCandidateBasicProps) => {
 					</Stack>
 
 					<Stack spacing={5} direction="row" justifyContent="center">
-						<Button size="large" type="submit" variant="contained">
+						<Button size="large" type="submit" variant="contained" disabled={disableSave}>
 							Save
 						</Button>
 					</Stack>
