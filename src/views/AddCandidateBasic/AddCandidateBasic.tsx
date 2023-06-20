@@ -135,7 +135,6 @@ const AddCandidateBasic = (props: AddCandidateBasicProps) => {
 		initialValues: initialValue,
 		validationSchema: newCandidateSchema,
 		onSubmit: (values) => {
-			console.log(JSON.stringify(values, null, 2));
 			saveCandidateDetails(values);
 		},
 	});
@@ -172,7 +171,6 @@ const AddCandidateBasic = (props: AddCandidateBasicProps) => {
 	}
 
 	const handleLocationChange = (locationValue: any) => {
-		console.log(locationValue)
 		if (!locationValue) {
 			return
 		}

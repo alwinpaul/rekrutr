@@ -8,7 +8,6 @@ import "./MainBody.scss";
 const MainBody = () => {
   // var isActive = this.context.router.route.location.pathname === this.props.to;
   //       var className = isActive ? 'active' : '';
-  console.log(Route);
 
   return (
     <div className="main-body">

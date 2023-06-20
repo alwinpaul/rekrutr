@@ -62,7 +62,6 @@ export const addCandidateDetails = createAsyncThunk(
     async (candidateDetails: CandidateDetail, thunkAPI) => {
         const candidateData = createCandidateData(candidateDetails);
         const response = await post(apiUrls.ADD_CANDIDATE, candidateData);
-        console.log(response)
         return response?.data;
     }
 );
@@ -122,7 +121,6 @@ export const uploadResumeFile = createAsyncThunk(
         const formData = new FormData();
         formData.append("resumeFile", resumeFile, resumeFile.name);
         const response = await post(apiUrls.UPLOAD_RESUME, formData);
-        console.log(response)
         return response?.data;
     }
 );

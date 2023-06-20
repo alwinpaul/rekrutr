@@ -28,7 +28,6 @@ const LeftNav = () => {
   const [openJob, setOpenJob] = useState(false);
 
   useEffect(() => {
-    console.log("Location changed!", location.pathname);
     if (location.pathname.includes("candidates")) {
       setOpenCandidate(true);
       setOpenJob(false);
