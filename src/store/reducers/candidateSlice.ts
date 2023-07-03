@@ -14,7 +14,7 @@ export interface CandidateState {
 	selectedCandidate?: CandidateDetail
 }
 
-const initialState = {
+const initialState: CandidateState = {
 	candidates: [],
 	visaStatus: [],
 	employmentTypes: [],
@@ -24,7 +24,7 @@ const initialState = {
 	salaryUnits: [],
 	industryVerticals: [],
 	selectedCandidate: undefined
-} as CandidateState;
+};
 
 export const candidateSlice = createSlice({
 	name: "candidates",

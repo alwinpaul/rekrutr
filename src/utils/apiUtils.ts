@@ -1,9 +1,34 @@
 import axios from "axios";
+import { string } from "yup";
 
 export const get = (url: string, header?: any) => {
-  return axios.get(url).catch((err) => console.log(err));
+  const config = {
+    headers: {
+      "x-access-token": '',
+      ...header
+    }
+  };
+
+  let accessTkn = localStorage.getItem('auth_token');
+  if (accessTkn) {
+    config.headers['x-access-token'] = accessTkn
+  }
+
+  return axios.get(url, config).catch((err) => console.log(err));
 };
 
-export const post = (url: string, data: any, header?: any) => {
-  return axios.post(url, data);
+export const post = (url: string, data: any, header: any = {}) => {
+
+  const config = {
+    headers: {
+      "x-access-token": '',
+      ...header
+    }
+  };
+
+  let accessTkn = localStorage.getItem('auth_token');
+  if (accessTkn) {
+    config.headers['x-access-token'] = accessTkn
+  }
+  return axios.post(url, data, config);
 };

@@ -4,7 +4,7 @@ import "./HomeView.scss";
 export const HomeView = () => {
     return (
         <>
-            <div className="main">Test str</div>
+            <h1 className="main flex items-center justify-center h-24 text-2xl">TecTalent Dashboard</h1>
         </>
     )
 }

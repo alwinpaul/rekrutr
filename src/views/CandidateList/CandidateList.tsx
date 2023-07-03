@@ -15,12 +15,11 @@ const CandidateList = () => {
 		(state: RootState) => state.candidates
 	);
 
-
 	const dispatch = useAppDispatch();
+
 	useEffect(() => {
 		dispatch(getCandidateDetails());
 	}, []);
-
 
 	return (
 		<div className="candidate-details-view">

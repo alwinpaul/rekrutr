@@ -1,10 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 import candidateReducer from "./reducers/candidateSlice";
+import authReducer from "./reducers/authSlice";
 import { useDispatch } from "react-redux";
 
 export const store = configureStore({
   reducer: {
     candidates: candidateReducer,
+    auth: authReducer
   },
 });
 export default store;
