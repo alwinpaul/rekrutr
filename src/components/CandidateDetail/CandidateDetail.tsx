@@ -111,8 +111,12 @@ const CandidateDetailComponent = (props: CandidateDetailProps) => {
 	}
 
 	return (
-		<div className="candidate-detail-container">
-			{candidate && (
+		<div className={`candidate-detail-container h-full`}>
+			{!candidate ? (
+				<div className="flex items-center justify-center text-xl h-full text-v-lite m-auto">
+					Select a candidate to view details.
+				</div>
+			) : (
 				<>
 					<section className="flex p-4 justify-end">
 						<a className="cdb-download-btn flex items-center border rounded-lg text-xs space-x-2 p-1" href={candidate.resumeUrl} target="_blank" download>
@@ -173,7 +177,7 @@ const CandidateDetailComponent = (props: CandidateDetailProps) => {
 						<div className="flex items-center justify-start">
 							<div className="title w-1/3 font-bold">Location</div>
 							<div className="flex items-center space-x-2 w-2/3">
-								<PersonPinCircleRoundedIcon font-size="small" />
+								<PersonPinCircleRoundedIcon fontSize="small" />
 								<div className="cdb-con-item-text">{candidate.location.description}</div>
 							</div>
 						</div>
@@ -235,7 +239,7 @@ const CandidateDetailComponent = (props: CandidateDetailProps) => {
 							<div className="flex items-center space-x-2 w-2/3">
 								<div className="cdb-con-item-text">
 									{industryVerticalsMap(candidate.industryVerticals).map((elem, index) => (
-										<BulletItem key={index} bulletColor="#ed4635" bulletDisplay="inline" >{elem.value}</BulletItem>
+										<BulletItem key={index} bulletColor="#fbd233" bulletDisplay="inline" >{elem.value}</BulletItem>
 									))}
 								</div>
 							</div>
@@ -246,7 +250,7 @@ const CandidateDetailComponent = (props: CandidateDetailProps) => {
 							<div className="flex items-center space-x-2 w-2/3">
 								<div className="cdb-con-item-text">
 									{technologiesMap(candidate.technologies).map((elem, index) => (
-										<BulletItem key={index} bulletColor="#ed4635" bulletDisplay="inline" >{elem.value}</BulletItem>
+										<BulletItem key={index} bulletColor="#fbd233" bulletDisplay="inline" >{elem.value}</BulletItem>
 									))}
 								</div>
 							</div>
@@ -257,7 +261,7 @@ const CandidateDetailComponent = (props: CandidateDetailProps) => {
 							<div className="flex items-center space-x-2 w-2/3">
 								<div className="cdb-con-item-text">
 									{rolesMap(candidate.roles).map((elem, index) => (
-										<BulletItem key={index} bulletColor="#ed4635" bulletDisplay="inline" >{elem.value}</BulletItem>
+										<BulletItem key={index} bulletColor="#fbd233" bulletDisplay="inline" >{elem.value}</BulletItem>
 									))}
 								</div>
 							</div>

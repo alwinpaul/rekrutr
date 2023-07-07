@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "./../../store/store";
 import { getCandidateDetails } from "./../../store/thunks/candidateThunks";
@@ -25,7 +25,7 @@ const CandidateList = () => {
 		<div className="candidate-details-view">
 			<div className="candidate-list-box">
 				{candidates.map((candidate: CandidateDetail, index) => (
-					<CandidateCard candidate={candidate} key={index}></CandidateCard>
+					<CandidateCard candidate={candidate} isActive={selectedCandidate?.id === candidate.id} key={index}></CandidateCard>
 				))}
 			</div>
 			<div className="candidate-detail-box">
