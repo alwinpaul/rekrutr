@@ -25,3 +25,24 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+.border-blue {
+  border-color: var(--tecnitaBlue);
+}
+
+.background-blue {
+  background-color: var(--tecnitaBlue);
+  color: #fff;
+}
+
+.tecnitaBlue {
+  color: var(--tecnitaBlue)
+}
+
+.text-color-lite {
+  color: #666;
+}
+
+.text-color-base {
+  color: var(--fontColor);
+}

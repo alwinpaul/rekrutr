@@ -4,7 +4,7 @@ import { RootState } from "./../../store/store";
 
 import CallRoundedIcon from '@mui/icons-material/CallRounded';
 import PersonPinCircleRoundedIcon from '@mui/icons-material/PersonPinCircleRounded';
-import AlternateEmailRoundedIcon from '@mui/icons-material/AlternateEmailRounded';
+import EmailRoundedIcon from '@mui/icons-material/EmailRounded';
 import CampaignRoundedIcon from '@mui/icons-material/CampaignRounded';
 import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownRounded';
 import KeyboardArrowUpRoundedIcon from '@mui/icons-material/KeyboardArrowUpRounded';
@@ -19,6 +19,7 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
+import BulletItem from "../BulletItem/BulletItem";
 
 interface CandidateDetailProps {
 	candidate: CandidateDetail | null;
@@ -113,31 +114,20 @@ const CandidateDetailComponent = (props: CandidateDetailProps) => {
 		<div className="candidate-detail-container">
 			{candidate && (
 				<>
-					<div className="cdb-download-sec">
-						<a className="cdb-download-btn" href={candidate.resumeUrl} target="_blank" download>
+					<section className="flex p-4 justify-end">
+						<a className="cdb-download-btn flex items-center border rounded-lg text-xs space-x-2 p-1" href={candidate.resumeUrl} target="_blank" download>
 							<div className="cdb-download-btn-text">Download Resume</div> <CloudDownloadRoundedIcon fontSize="small" />
 						</a>
-					</div>
-					<div className="cd-basic-box">
-						<div className="cdb-name-box">
-							<div className="cdb-name">{candidate.firstName} {candidate.lastName}</div>
-							<div className="cdb-job-title">{candidate.jobTitle}</div>
-							<div className="cdb-exp"><div className="cbd-sec-title">Total Experience :</div>
-								<div className="cdb-t-exp">
-									{candidate.expYears} years{" "}
-									{candidate.expMonths} months
-								</div></div>
-							<div className="cdb-visa-status"><div className="cbd-sec-title">Visa Status :</div> <div className="cdb-visa-sts-chip">{visaStatusMap(candidate.visaStatus).value}</div></div>
-							<div className="cdb-visa-status"><div className="cbd-sec-title">Notice Period :</div> <div className="cdb-visa-sts-chip">{candidate.noticePeriod} days</div></div>
-							<div className="cdb-visa-status">
-								<div className="cbd-sec-title">Salary Expectations :</div> {
-									candidate.salaryExpectations.map((sal, index) =>
-										(<div className="cdb-visa-sts-chip" key={`sal-${index}`}>{sal.value} {sal.unit}</div>))}
-							</div>
+					</section>
+
+					<section className="p-5 flex items-center justify-center border-t w-full">
+						<div className="w-3/4">
+							<div className="text-xl font-bold capitalize tecnitaBlue">{candidate.firstName} {candidate.lastName}</div>
+							<div className="text-base text-color-lite">{candidate.jobTitle}</div>
 						</div>
-						<div className="cdb-contact-box">
-							<div className="cbd-con-itm cdb-phone">
-								<CallRoundedIcon />
+						<div className="w-1/4 text-sm space-y-2">
+							<div className="flex items-center space-x-2 cursor-pointer">
+								<CallRoundedIcon fontSize="small" />
 								<Tooltip
 									PopperProps={{
 										disablePortal: true,
@@ -148,13 +138,13 @@ const CandidateDetailComponent = (props: CandidateDetailProps) => {
 									disableTouchListener
 									title="Phone Number copied"
 								>
-									<div className="cdb-con-item-text copy-text-field" onClick={() => copyText("phone", candidate?.phone)}>
+									<div className="copy-text-field" onClick={() => copyText("phone", candidate?.phone)}>
 										{candidate.phone}
 									</div>
 								</Tooltip>
 							</div>
-							<div className="cbd-con-itm cdb-email">
-								<AlternateEmailRoundedIcon />
+							<div className="flex items-center space-x-2 cursor-pointer">
+								<EmailRoundedIcon fontSize="small" />
 								<Tooltip
 									PopperProps={{
 										disablePortal: true,
@@ -165,65 +155,144 @@ const CandidateDetailComponent = (props: CandidateDetailProps) => {
 									disableTouchListener
 									title="Email copied"
 								>
-									<div className="cdb-con-item-text copy-text-field" onClick={() => copyText("email", candidate?.email)}>
+									<div className="copy-text-field" onClick={() => copyText("email", candidate?.email)}>
 										{candidate.email}
 									</div>
 								</Tooltip>
 							</div>
-							<div className="cbd-con-itm cdb-location"><PersonPinCircleRoundedIcon /><div className="cdb-con-item-text">{candidate.location.description}</div></div>
 						</div>
-					</div>
+					</section>
 
-					{laststatus(candidate.candidateStatus) && (
-						<div className="cdb-status-box-sec">
-							<div className="cbd-sec-title">Candidate Status :</div>
-							{getStatusView(candidate)}
-						</div>
-					)}
+					{/* Section for status */}
+					<section>
 
-					<div className="cdb-skills-box">
-						<div className="cdb-sk-status cdb-sec-box"><div className="cbd-sec-title">Employment Type :</div> {employmentTypeMap(candidate.employmentTypes).map((elem, index) => (<div key={index} className=" cdb-chip cdb-emp-sts-chip">{elem.value}</div>))}</div>
-						<div className="cdb-sk-status cdb-sec-box"><div className="cbd-sec-title">Industry Verticals :</div> {industryVerticalsMap(candidate.industryVerticals).map((elem, index) => (<div key={index} className=" cdb-chip cdb-sks-sts-chip">{elem.value}</div>))}</div>
-						<div className="cdb-sk-status cdb-sec-box"><div className="cbd-sec-title">Technologies :</div> {technologiesMap(candidate.technologies).map((elem, index) => (<div key={index} className=" cdb-chip cdb-sks-sts-chip">{elem.value}</div>))}</div>
-						<div className="cdb-sk-status cdb-sec-box"><div className="cbd-sec-title">Roles :</div> {rolesMap(candidate.roles).map((elem, index) => (<div key={index} className=" cdb-chip cdb-sks-sts-chip">{elem.value}</div>))}</div>
-						<div className="cdb-sk-status cdb-sec-box"><div className="cbd-sec-title">Skills :</div> {skillsMap(candidate.skills).map((elem, index) => (<div key={index} className=" cdb-chip cdb-sks-sts-chip">{elem.value}</div>))}</div>
-					</div>
+					</section>
 
-					<div className="cdb-summary-sec">
-						<div className="cdb-sum-box cdb-sec-box">
-							<div className="cbd-sec-title">Expertise</div>
-							<div className="sdb-sec-text">{candidate.expertise}</div>
+					{/*  */}
+					<section className="p-5 space-y-4 border-t w-full text-sm">
+						<div className="flex items-center justify-start">
+							<div className="title w-1/3 font-bold">Location</div>
+							<div className="flex items-center space-x-2 w-2/3">
+								<PersonPinCircleRoundedIcon font-size="small" />
+								<div className="cdb-con-item-text">{candidate.location.description}</div>
+							</div>
 						</div>
-						<div className="cdb-sum-box cdb-sec-box">
-							<div className="cbd-sec-title">Job Summary</div>
-							<div className="sdb-sec-text">{candidate.summary}</div>
-						</div>
-					</div>
 
-					<div className="cdb-comment-section">
-						<div className="cdb-comment-add">
-							<TextField
-								className="comment-field"
-								id="user_comment"
-								label="User Comment"
-								variant="outlined"
-								fullWidth
-								multiline
-								rows={4}
-								name="user_comment"
-								value={commentValue}
-								onChange={(e) => setCommentValue(e.target.value)}
-							/>
-							<Stack spacing={5} direction="row" justifyContent="center">
-								<Button size="large" variant="contained" onClick={() => handleAddComment(candidate?.id)}>
-									<SendRoundedIcon />
-								</Button>
-							</Stack>
+						<div className="flex items-center justify-start">
+							<div className="title w-1/3 font-bold">Total Experience</div>
+							<div className="flex items-center space-x-2 w-2/3">
+								<div className="cdb-con-item-text">
+									{candidate.expYears} years{" "}
+									{candidate.expMonths} months
+								</div>
+							</div>
 						</div>
-						<div className="cdb-comment-view">
-							<div className="cdb-comment-box"></div>
+
+						<div className="flex items-center justify-start">
+							<div className="title w-1/3 font-bold">Notice Period</div>
+							<div className="flex items-center space-x-2 w-2/3">
+								<div className="cdb-con-item-text">
+									{candidate.noticePeriod} days
+								</div>
+							</div>
 						</div>
-					</div>
+
+						<div className="flex items-center justify-start">
+							<div className="title w-1/3 font-bold">Employment Type</div>
+							<div className="flex items-center space-x-2 w-2/3">
+								<div className="cdb-con-item-text">
+									{employmentTypeMap(candidate.employmentTypes).map((elem, index) => (
+										<BulletItem key={index} bulletColor="#49a99e" bulletDisplay="inline" >{elem.value}</BulletItem>
+									))}
+								</div>
+							</div>
+						</div>
+
+						<div className="flex items-center justify-start">
+							<div className="title w-1/3 font-bold">Visa Status</div>
+							<div className="flex items-center space-x-2 w-2/3">
+								<div className="cdb-con-item-text">
+									<BulletItem bulletColor="#49a99e" bulletDisplay="inline" >
+										{visaStatusMap(candidate.visaStatus).value}
+									</BulletItem>
+								</div>
+							</div>
+						</div>
+
+						<div className="flex items-center justify-start">
+							<div className="title w-1/3 font-bold">Salary Expectations</div>
+							<div className="flex items-center space-x-2 w-2/3">
+								<div className="cdb-con-item-text flex space-x-4">
+									{candidate.salaryExpectations.map((sal, index) => (
+										<div key={`sal-${index}`} className="" >{sal.value} {sal.unit}</div>
+									))}
+								</div>
+							</div>
+						</div>
+
+						<div className="flex items-center justify-start">
+							<div className="title w-1/3 font-bold">Industry Verticals</div>
+							<div className="flex items-center space-x-2 w-2/3">
+								<div className="cdb-con-item-text">
+									{industryVerticalsMap(candidate.industryVerticals).map((elem, index) => (
+										<BulletItem key={index} bulletColor="#ed4635" bulletDisplay="inline" >{elem.value}</BulletItem>
+									))}
+								</div>
+							</div>
+						</div>
+
+						<div className="flex items-center justify-start">
+							<div className="title w-1/3 font-bold">Technologies</div>
+							<div className="flex items-center space-x-2 w-2/3">
+								<div className="cdb-con-item-text">
+									{technologiesMap(candidate.technologies).map((elem, index) => (
+										<BulletItem key={index} bulletColor="#ed4635" bulletDisplay="inline" >{elem.value}</BulletItem>
+									))}
+								</div>
+							</div>
+						</div>
+
+						<div className="flex items-center justify-start">
+							<div className="title w-1/3 font-bold">Roles</div>
+							<div className="flex items-center space-x-2 w-2/3">
+								<div className="cdb-con-item-text">
+									{rolesMap(candidate.roles).map((elem, index) => (
+										<BulletItem key={index} bulletColor="#ed4635" bulletDisplay="inline" >{elem.value}</BulletItem>
+									))}
+								</div>
+							</div>
+						</div>
+
+						<div className="flex items-center justify-start">
+							<div className="title w-1/3 font-bold">Skills</div>
+							<div className="flex items-center space-x-2 w-2/3">
+								<div className="cdb-con-item-text">
+									{skillsMap(candidate.skills).map((elem, index) => (
+										<BulletItem key={index} bulletColor="#49a99e" bulletDisplay="inline" >{elem.value}</BulletItem>
+									))}
+								</div>
+							</div>
+						</div>
+
+						<div className="flex items-start justify-start">
+							<div className="title w-1/3 font-bold">Expertise</div>
+							<div className="flex items-center space-x-2 w-2/3">
+								<div className="text-area-bg p-1 rounded-sm">
+									{candidate.expertise}
+								</div>
+							</div>
+						</div>
+
+						<div className="flex items-start justify-start">
+							<div className="title w-1/3 font-bold">Summary</div>
+							<div className="flex items-center space-x-2 w-2/3">
+								<div className="text-area-bg p-1 rounded-sm">
+									{candidate.summary}
+								</div>
+							</div>
+						</div>
+
+					</section>
 				</>
 			)}
 		</div>
