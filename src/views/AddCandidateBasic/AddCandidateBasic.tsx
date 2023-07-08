@@ -8,8 +8,6 @@ import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
-import Alert from "@mui/material/Alert";
-import AlertTitle from "@mui/material/AlertTitle";
 import FileUploadOutlinedIcon from "@mui/icons-material/FileUploadOutlined";
 import CloudDoneRoundedIcon from '@mui/icons-material/CloudDoneRounded';
 import apiUrls from "./../../common/apiUrls"
@@ -25,6 +23,7 @@ import Autocomplete from "@mui/material/Autocomplete";
 import { useSelector } from "react-redux";
 import { CandidateState } from "../../store/reducers/candidateSlice";
 import axios from "axios";
+import { CircularProgress } from "@mui/material";
 
 const phoneRegExp = /^\d{10}$/;
 
@@ -124,7 +123,7 @@ const AddCandidateBasic = (props: AddCandidateBasicProps) => {
 	const [resumeFile, setResumeFile] = useState<File | undefined>();
 	const [successAlert, setSuccessAlert] = useState(false);
 	const [resumeUploadStatus, setResumeUploadStatus] = useState(false);
-	const [disableSave, setDisableSave] = useState(false);
+	const [isSavingData, setIsSavingData] = useState(false);
 	const [initialValue, setInitiaValue] = useState(defaultFormValue);
 
 	let candidateState: CandidateState = useSelector(
@@ -164,7 +163,7 @@ const AddCandidateBasic = (props: AddCandidateBasicProps) => {
 	const handleFileUpload = (e: any) => {
 		setResumeUploadStatus(false);
 		if (resumeFile) {
-			setDisableSave(true);
+			setIsSavingData(true);
 			dispatch(uploadResumeFile(resumeFile)).then((resp) => {
 				if (resp.type === 'candidate/uploadResume/fulfilled') {
 					formik.setFieldValue("resumeUrl", resp.payload.url)
@@ -172,7 +171,7 @@ const AddCandidateBasic = (props: AddCandidateBasicProps) => {
 				} else {
 					alert("Resume upload failed")
 				}
-				setDisableSave(false);
+				setIsSavingData(false);
 			})
 		}
 	}
@@ -191,10 +190,10 @@ const AddCandidateBasic = (props: AddCandidateBasicProps) => {
 
 	return (
 		<section className="candidate-container">
-			<h2>New Profile</h2>
+			<h2 className="text-xl">New Profile</h2>
 			<div className="candidate-form">
 				<form onSubmit={formik.handleSubmit}>
-					<h3 className="section-title">Basic Details</h3>
+					<h3 className="section-title text-xl font-bold m-4">Basic Details</h3>
 					<InputCard name="Name" cardDescription="Enter first and last name">
 						<Box
 							component="div"
@@ -271,7 +270,7 @@ const AddCandidateBasic = (props: AddCandidateBasicProps) => {
 						</Box>
 					</InputCard>
 
-					<h3 className="section-title">Work Experience</h3>
+					<h3 className="section-title text-xl font-bold m-4">Work Experience</h3>
 
 					<InputCard name="Job Title">
 						<Box
@@ -561,7 +560,7 @@ const AddCandidateBasic = (props: AddCandidateBasicProps) => {
 						</Box>
 					</InputCard>
 
-					<h3 className="section-title">Other Details</h3>
+					<h3 className="section-title text-xl font-bold m-4">Other Details</h3>
 
 					<InputCard name="Current Location">
 						<Box
@@ -723,38 +722,12 @@ const AddCandidateBasic = (props: AddCandidateBasicProps) => {
 								)}
 								onChange={(e, newVal) => handleAutoCompleteChange(e, newVal, "employmentTypes")}
 							/>
-							{/* <TextField
-								className="input-field"
-								
-								select
-								label="Employment type"
-								variant="outlined"
-								fullWidth
-								multiple
-								name="employmentTypes"
-								error={
-									formik.touched.employmentTypes &&
-									Boolean(formik.errors.employmentTypes)
-								}
-								helperText={
-									formik.touched.employmentTypes &&
-									formik.errors.employmentTypes
-								}
-								value={formik.values.employmentTypes}
-								onChange={formik.handleChange}
-								onBlur={formik.handleBlur}
-							>
-								{candidateState.employmentTypes.map((et, index) => (
-									<MenuItem value={et.id} key={`et-${index}`}>{et.value}</MenuItem>
-								))}
-
-							</TextField> */}
 						</Box>
 					</InputCard>
 
-					<h3 className="section-title">Resume</h3>
+					<h3 className="section-title text-xl font-bold m-4">Resume</h3>
 
-					<Stack direction="column" alignItems="flex-start" spacing={2}>
+					<div className="flex flex-col m-12 items-center justify-center space-y-2">
 						<Button variant="outlined" component="label">
 							<FileUploadOutlinedIcon />
 							Get Resume
@@ -765,6 +738,7 @@ const AddCandidateBasic = (props: AddCandidateBasicProps) => {
 								onChange={(e) => {
 									if (!e.target.files) return;
 									setResumeFile(e.target.files[0]);
+									setResumeUploadStatus(false);
 								}}
 							/>
 						</Button>
@@ -775,27 +749,23 @@ const AddCandidateBasic = (props: AddCandidateBasicProps) => {
 									{(resumeUploadStatus &&
 										<CloudDoneRoundedIcon color="success" className="upload-icon-success" />
 									)}</div>
-								<Button variant="contained" component="label" onClick={handleFileUpload}>
+								<Button variant="contained" component="label" onClick={handleFileUpload} disabled={resumeUploadStatus}>
 									Upload
 								</Button>
 							</>
 						)}
-					</Stack>
+					</div>
 
-					<Stack spacing={5} direction="row" justifyContent="center">
-						<Button size="large" type="submit" variant="contained" disabled={disableSave}>
-							Save
+					<div className="flex flex-col items-center justify-center mb-20">
+						<Button className="w-32 flex items-center justify-center" size="small" type="submit" variant="contained" disabled={isSavingData}>
+							{isSavingData ? (
+								<><CircularProgress color="inherit" className="mr-5 p-2" /> Saving</>
+							) : 'Save'}
 						</Button>
-					</Stack>
-
-					{successAlert && (
-						<div className="success-msg">
-							<Alert severity="success">
-								<AlertTitle>Success</AlertTitle>
-								Data saved successfully.
-							</Alert>
-						</div>
-					)}
+						{successAlert && (
+							<div className="text-lg p-2 success-text">Data save successful</div>
+						)}
+					</div>
 				</form>
 			</div>
 		</section>
