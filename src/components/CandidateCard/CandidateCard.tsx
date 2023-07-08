@@ -1,6 +1,5 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { CandidateDetail, StatusObj } from "../../common/interfaces/candidateInterface";
-import PersonPinCircleRoundedIcon from '@mui/icons-material/PersonPinCircleRounded';
 import { RootState, useAppDispatch } from "./../../store/store";
 import { useSelector } from "react-redux";
 import EmailRoundedIcon from '@mui/icons-material/EmailRounded';

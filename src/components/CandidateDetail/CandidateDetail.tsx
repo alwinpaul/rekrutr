@@ -9,16 +9,10 @@ import CampaignRoundedIcon from '@mui/icons-material/CampaignRounded';
 import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownRounded';
 import KeyboardArrowUpRoundedIcon from '@mui/icons-material/KeyboardArrowUpRounded';
 import CloudDownloadRoundedIcon from '@mui/icons-material/CloudDownloadRounded';
-import SendRoundedIcon from '@mui/icons-material/SendRounded';
 import Tooltip from '@mui/material/Tooltip';
-import ClickAwayListener from '@mui/material/ClickAwayListener';
 
 import "./CandidateDetail.scss";
 import { useState } from "react";
-import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
-import Stack from "@mui/material/Stack";
-import Button from "@mui/material/Button";
 import BulletItem from "../BulletItem/BulletItem";
 
 interface CandidateDetailProps {
