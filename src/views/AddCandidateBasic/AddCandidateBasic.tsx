@@ -20,7 +20,7 @@ import {
 import LocationField from "./../../components/LocationField/LocationField";
 
 import "./AddCandidateBasic.scss";
-import { addCandidateDetails, uploadResumeFile } from "../../store/thunks/candidateThunks";
+import { addCandidateDetails, getCandidateDetails, uploadResumeFile } from "../../store/thunks/candidateThunks";
 import Autocomplete from "@mui/material/Autocomplete";
 import { useSelector } from "react-redux";
 import { CandidateState } from "../../store/reducers/candidateSlice";
@@ -145,6 +145,7 @@ const AddCandidateBasic = (props: AddCandidateBasicProps) => {
 	const saveCandidateDetails = (values: CandidateDetail) => {
 		dispatch(addCandidateDetails(values)).then((resp) => {
 			if ((resp.type == "candidate/addNew/fulfilled")) {
+				dispatch(getCandidateDetails());
 				setSuccessAlert(true);
 				// formik.resetForm();
 				setTimeout(() => {

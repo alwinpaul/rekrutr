@@ -36,7 +36,7 @@ export const candidateSlice = createSlice({
 	},
 	extraReducers: (builder) => {
 		builder.addCase(addCandidateDetails.fulfilled, (state, action) => {
-			state.candidates.push(action.payload);
+			// No side effect now
 		});
 		builder.addCase(getCandidateDetails.fulfilled, (state, action) => {
 			state.candidates = [...action.payload];

@@ -2,6 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { CandidateDetail } from "../../common/interfaces/candidateInterface";
 import apiUrls from "../../common/apiUrls";
 import { post, get } from "./../../utils/apiUtils";
+import { AxiosResponse } from "axios";
 
 
 const createCandidateData = (candidateDetails: CandidateDetail) => {
@@ -61,8 +62,8 @@ export const addCandidateDetails = createAsyncThunk(
     "candidate/addNew",
     async (candidateDetails: CandidateDetail, thunkAPI) => {
         const candidateData = createCandidateData(candidateDetails);
-        const response = await post(apiUrls.ADD_CANDIDATE, candidateData);
-        return response?.data;
+        const response: AxiosResponse = await post(apiUrls.ADD_CANDIDATE, candidateData);
+        return response.data.data;
     }
 );
 

@@ -142,9 +142,9 @@ const CandidateDetailComponent = (props: CandidateDetailProps) => {
 									disableTouchListener
 									title="Phone Number copied"
 								>
-									<div className="copy-text-field" onClick={() => copyText("phone", candidate?.phone)}>
+									<a href={`tel:+1${candidate.phone}`} className="copy-text-field" onClick={() => copyText("phone", candidate?.phone)}>
 										{candidate.phone}
-									</div>
+									</a>
 								</Tooltip>
 							</div>
 							<div className="flex items-center space-x-2 cursor-pointer">
