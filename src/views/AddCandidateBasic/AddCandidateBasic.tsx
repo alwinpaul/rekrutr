@@ -345,9 +345,9 @@ const AddCandidateBasic = (props: AddCandidateBasicProps) => {
 								onChange={formik.handleChange}
 								onBlur={formik.handleBlur}
 							>
-								{[...Array(12)].map((option, index) => (
-									<MenuItem key={index} value={index + 1}>
-										{index + 1} {`month${index > 0 ? "s" : ""}`}
+								{[...Array(13)].map((option, index) => (
+									<MenuItem key={index} value={index}>
+										{index} {`month${index > 1 ? "s" : ""}`}
 									</MenuItem>
 								))}
 							</TextField>
