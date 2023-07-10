@@ -146,7 +146,7 @@ const AddCandidateBasic = (props: AddCandidateBasicProps) => {
 			if ((resp.type == "candidate/addNew/fulfilled")) {
 				dispatch(getCandidateDetails());
 				setSuccessAlert(true);
-				// formik.resetForm();
+				formik.resetForm();
 				setTimeout(() => {
 					setSuccessAlert(false);
 				}, 7000);
