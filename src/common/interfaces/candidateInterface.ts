@@ -21,11 +21,21 @@ export interface CandidateDetail {
 	roles: number[];
 	skills: string[];
 	candidateStatus?: string[];
+	source?: string;
+	website?: string;
+	linkedIn?: string;
 }
 
 export interface StatusObj {
 	id?: number;
 	value: any;
+	created_at?: string;
+}
+
+export interface CurrencyObj {
+	id?: number;
+	value: string;
+	displayText: string
 	created_at?: string;
 }
 
@@ -48,6 +58,7 @@ export interface salaryExpectations {
 	value: number;
 	unit: string;
 	timestamp?: string;
+	currency?: number;
 }
 
 export interface Location {

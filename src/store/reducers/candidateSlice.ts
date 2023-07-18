@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { RolesObj, CandidateDetail, StatusObj } from "./../../common/interfaces/candidateInterface";
+import { RolesObj, CandidateDetail, StatusObj, CurrencyObj } from "./../../common/interfaces/candidateInterface";
 import { addCandidateDetails, getCandidateDetails, getConfig } from "../thunks/candidateThunks";
 
 export interface CandidateState {
@@ -11,7 +11,8 @@ export interface CandidateState {
 	skills: StatusObj[];
 	salaryUnits: string[];
 	industryVerticals: StatusObj[];
-	selectedCandidate?: CandidateDetail
+	selectedCandidate?: CandidateDetail;
+	currency: CurrencyObj[]
 }
 
 const initialState: CandidateState = {
@@ -23,7 +24,8 @@ const initialState: CandidateState = {
 	skills: [],
 	salaryUnits: [],
 	industryVerticals: [],
-	selectedCandidate: undefined
+	selectedCandidate: undefined,
+	currency: []
 };
 
 export const candidateSlice = createSlice({
@@ -49,6 +51,7 @@ export const candidateSlice = createSlice({
 			state.skills = [...action.payload.skills];
 			state.salaryUnits = [...action.payload.salary_units];
 			state.industryVerticals = [...action.payload.industry_verticals];
+			state.currency = [...action.payload.currency];
 		});
 	},
 });

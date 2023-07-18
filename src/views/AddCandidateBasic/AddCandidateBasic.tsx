@@ -53,10 +53,14 @@ const defaultFormValue: CandidateDetail = {
 	employmentTypes: [],
 	salaryExpectations: [{
 		value: 0,
-		unit: "per_hour"
+		unit: "per_hour",
+		currency: 1
 	}],
 	resumeUrl: "",
-	comments: []
+	comments: [],
+	source: "",
+	website: "",
+	linkedIn: ""
 };
 
 const newCandidateSchema = Yup.object().shape({
@@ -112,7 +116,10 @@ const newCandidateSchema = Yup.object().shape({
 			value: Yup.number(),
 			unit: Yup.string()
 		}))
-		.min(1, 'Required')
+		.min(1, 'Required'),
+	source: Yup.string(),
+	website: Yup.string(),
+	linkedIn: Yup.string()
 });
 
 interface AddCandidateBasicProps { }
@@ -654,7 +661,7 @@ const AddCandidateBasic = (props: AddCandidateBasicProps) => {
 							<Box
 								component="div"
 								sx={{
-									"& > :not(style)": { mr: 1, width: "30ch" },
+									"& > :not(style)": { mr: 1, width: "20ch" },
 								}}
 								key={`ie-${index}`}
 							>
@@ -671,6 +678,21 @@ const AddCandidateBasic = (props: AddCandidateBasicProps) => {
 								<TextField
 									className="input-field"
 									select
+									label="Currency"
+									variant="outlined"
+									fullWidth
+									name={`salaryExpectations[${index}].currency`}
+									value={formik.values.salaryExpectations[index].currency}
+									onChange={formik.handleChange}
+									onBlur={formik.handleBlur}
+								>
+									{candidateState.currency.map((currencyItem, index) => (
+										<MenuItem value={currencyItem.id} key={`unit-${index}`}>{currencyItem.value}</MenuItem>
+									))}
+								</TextField>
+								<TextField
+									className="input-field"
+									select
 									label="Income unit"
 									variant="outlined"
 									fullWidth
@@ -683,6 +705,7 @@ const AddCandidateBasic = (props: AddCandidateBasicProps) => {
 										<MenuItem value={unit} key={`unit-${index}`}>{unit}</MenuItem>
 									))}
 								</TextField>
+
 							</Box>
 						))}
 					</InputCard>
@@ -755,6 +778,92 @@ const AddCandidateBasic = (props: AddCandidateBasicProps) => {
 							</>
 						)}
 					</div>
+
+					<h3 className="section-title text-xl font-bold m-4">Other Details</h3>
+
+					<InputCard name="LinkedIn Profile">
+						<Box
+							component="div"
+							sx={{
+								"& > :not(style)": { mr: 1, width: "61ch" },
+							}}
+						>
+							<TextField
+								className="input-field"
+								id="linkedIn"
+								label="profile link url"
+								variant="outlined"
+								fullWidth
+								name="linkedIn"
+								error={
+									formik.touched.linkedIn &&
+									Boolean(formik.errors.linkedIn)
+								}
+								helperText={
+									formik.touched.linkedIn && formik.errors.linkedIn
+								}
+								value={formik.values.linkedIn}
+								onChange={formik.handleChange}
+								onBlur={formik.handleBlur}
+							/>
+						</Box>
+					</InputCard>
+
+					<InputCard name="Website URL">
+						<Box
+							component="div"
+							sx={{
+								"& > :not(style)": { mr: 1, width: "61ch" },
+							}}
+						>
+							<TextField
+								className="input-field"
+								id="website"
+								label="website url"
+								variant="outlined"
+								fullWidth
+								name="website"
+								error={
+									formik.touched.website &&
+									Boolean(formik.errors.website)
+								}
+								helperText={
+									formik.touched.website && formik.errors.website
+								}
+								value={formik.values.website}
+								onChange={formik.handleChange}
+								onBlur={formik.handleBlur}
+							/>
+						</Box>
+					</InputCard>
+
+					<InputCard name="Source / Referral">
+						<Box
+							component="div"
+							sx={{
+								"& > :not(style)": { mr: 1, width: "61ch" },
+							}}
+						>
+							<TextField
+								className="input-field"
+								id="source"
+								label="add name or url"
+								variant="outlined"
+								fullWidth
+								name="source"
+								error={
+									formik.touched.source &&
+									Boolean(formik.errors.source)
+								}
+								helperText={
+									formik.touched.source && formik.errors.source
+								}
+								value={formik.values.source}
+								onChange={formik.handleChange}
+								onBlur={formik.handleBlur}
+							/>
+						</Box>
+					</InputCard>
 
 					<div className="flex flex-col items-center justify-center mb-20">
 						<Button className="w-32 flex items-center justify-center" size="small" type="submit" variant="contained" disabled={isSavingData}>

@@ -25,7 +25,10 @@ const createCandidateData = (candidateDetails: CandidateDetail) => {
         resumeUrl,
         technologies,
         skills,
-        roles
+        roles,
+        website,
+        linkedIn,
+        source
     } = candidateDetails;
 
     const total_exp = expYears * 12 + expMonths;
@@ -52,6 +55,9 @@ const createCandidateData = (candidateDetails: CandidateDetail) => {
         technologies,
         skills,
         roles,
+        linkedin_URL: linkedIn,
+        website_url: website,
+        referral_source: source,
         userId: "80aa41a0-973a-4b39-8a5c-890bd3bc9aae"
     };
 
