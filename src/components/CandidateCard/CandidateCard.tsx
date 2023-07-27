@@ -58,7 +58,7 @@ export default function CandidateCard(props: CandidateCardProps) {
             <div className="top h-24 flex items-start justify-center p-2">
                 <div className="left w-2/3 border-r h-full">
                     <div className="name text-lg font-bold capitalize tecnitaBlue">{candidate.firstName} {candidate.lastName}</div>
-                    <div className="text-color-lite">{candidate.jobTitle}</div>
+                    <div className="text-color-lite truncate">{candidate.jobTitle}</div>
 
                     <div className="flex items-center justify-start text-xs">
                         <div className="title w-1/4 font-bold">Location</div>

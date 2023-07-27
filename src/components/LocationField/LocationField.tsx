@@ -72,6 +72,7 @@ export default function LocationField(props: any) {
         [],
     );
 
+
     React.useEffect(() => {
         props.locationChange(value)
     }, [value])

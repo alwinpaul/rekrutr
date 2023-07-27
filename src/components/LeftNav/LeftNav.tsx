@@ -85,7 +85,7 @@ const LeftNav = () => {
             <ListItemButton
               sx={{ pl: 4 }}
               component={NavLink}
-              to="/candidates/list"
+              to="/candidates"
             >
               <ListItemIcon>
                 <PeopleAltOutlinedIcon />
@@ -110,7 +110,7 @@ const LeftNav = () => {
               </ListItemIcon>
               <ListItemText primary="Add Job" />
             </ListItemButton>
-            <ListItemButton sx={{ pl: 4 }} component={NavLink} to="/jobs/list">
+            <ListItemButton sx={{ pl: 4 }} component={NavLink} to="/jobs">
               <ListItemIcon>
                 <PlaylistAddCheckOutlinedIcon />
               </ListItemIcon>

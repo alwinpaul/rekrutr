@@ -7,7 +7,7 @@ import { getConfig } from "./../../store/thunks/candidateThunks";
 
 const CandidateHome = () => {
   const dispatch = useAppDispatch();
-  useEffect(()=>{
+  useEffect(() => {
     dispatch(getConfig())
   }, [])
 
@@ -15,7 +15,7 @@ const CandidateHome = () => {
     <>
       <Routes>
         <Route path="add" element={<AddCandidateBasic />} />
-        <Route path="list" element={<CandidateList />} />
+        <Route path="/" element={<CandidateList />} />
       </Routes>
     </>
   );

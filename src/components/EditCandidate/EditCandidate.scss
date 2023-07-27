@@ -1,0 +1,19 @@
+.file-type-name {
+    font-size: var(--small);
+}
+
+.success-msg {
+    position: fixed;
+    bottom: 0;
+    z-index: 9;
+    width: 70%;
+}
+
+.upload-file-name {
+    display: flex;
+    align-items: center;
+}
+
+.success-text {
+    color: var(--tecnitaGreen)
+}

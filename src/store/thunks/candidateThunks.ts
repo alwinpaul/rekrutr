@@ -7,6 +7,7 @@ import { AxiosResponse } from "axios";
 
 const createCandidateData = (candidateDetails: CandidateDetail) => {
     const {
+        id,
         firstName,
         lastName,
         email,
@@ -36,6 +37,7 @@ const createCandidateData = (candidateDetails: CandidateDetail) => {
     const comments: any = [];
 
     const candidateData = {
+        id: id,
         first_name: firstName,
         last_name: lastName,
         email,
@@ -69,6 +71,15 @@ export const addCandidateDetails = createAsyncThunk(
     async (candidateDetails: CandidateDetail, thunkAPI) => {
         const candidateData = createCandidateData(candidateDetails);
         const response: AxiosResponse = await post(apiUrls.ADD_CANDIDATE, candidateData);
+        return response.data.data;
+    }
+);
+
+export const editCandidateDetails = createAsyncThunk(
+    "candidate/editDetail",
+    async (candidateDetails: CandidateDetail, thunkAPI) => {
+        const candidateData = createCandidateData(candidateDetails);
+        const response: AxiosResponse = await post(apiUrls.EDIT_CANDIDATE, candidateData);
         return response.data.data;
     }
 );

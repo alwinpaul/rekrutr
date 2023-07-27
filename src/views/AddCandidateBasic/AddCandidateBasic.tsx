@@ -6,24 +6,22 @@ import InputCard from "./../../components/InputCard/InputCard";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
-import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import FileUploadOutlinedIcon from "@mui/icons-material/FileUploadOutlined";
 import CloudDoneRoundedIcon from '@mui/icons-material/CloudDoneRounded';
-import apiUrls from "./../../common/apiUrls"
+import { useParams } from "react-router-dom";
 
-import {
-	CandidateDetail,
-} from "./../../common/interfaces/candidateInterface";
+import { CandidateDetail } from "./../../common/interfaces/candidateInterface";
 import LocationField from "./../../components/LocationField/LocationField";
 
-import "./AddCandidateBasic.scss";
+
 import { addCandidateDetails, getCandidateDetails, uploadResumeFile } from "../../store/thunks/candidateThunks";
 import Autocomplete from "@mui/material/Autocomplete";
 import { useSelector } from "react-redux";
 import { CandidateState } from "../../store/reducers/candidateSlice";
-import axios from "axios";
 import { CircularProgress } from "@mui/material";
+
+import "./AddCandidateBasic.scss";
 
 const phoneRegExp = /^\d{10}$/;
 
@@ -132,13 +130,21 @@ const AddCandidateBasic = (props: AddCandidateBasicProps) => {
 	const [resumeUploadStatus, setResumeUploadStatus] = useState(false);
 	const [isSavingData, setIsSavingData] = useState(false);
 	const [initialValue, setInitiaValue] = useState(defaultFormValue);
+	const [isEditMode, setIsEditMode] = useState(false);
 
 	let candidateState: CandidateState = useSelector(
 		(state: RootState) => state.candidates
 	);
 
-	useEffect(() => { }, []);
+	let { id } = useParams();
 	const dispatch = useAppDispatch();
+	useEffect(() => {
+		if (id) {
+			setIsEditMode(true);
+			// dispatch(getCandidateById()) - TODO
+		}
+	}, []);
+
 
 	const formik = useFormik({
 		initialValues: initialValue,

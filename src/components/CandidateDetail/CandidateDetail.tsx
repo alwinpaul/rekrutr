@@ -5,10 +5,8 @@ import { RootState } from "./../../store/store";
 import CallRoundedIcon from '@mui/icons-material/CallRounded';
 import PersonPinCircleRoundedIcon from '@mui/icons-material/PersonPinCircleRounded';
 import EmailRoundedIcon from '@mui/icons-material/EmailRounded';
-import CampaignRoundedIcon from '@mui/icons-material/CampaignRounded';
-import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownRounded';
-import KeyboardArrowUpRoundedIcon from '@mui/icons-material/KeyboardArrowUpRounded';
 import CloudDownloadRoundedIcon from '@mui/icons-material/CloudDownloadRounded';
+import EditIcon from '@mui/icons-material/Edit';
 import Tooltip from '@mui/material/Tooltip';
 
 import "./CandidateDetail.scss";
@@ -17,6 +15,7 @@ import BulletItem from "../BulletItem/BulletItem";
 
 interface CandidateDetailProps {
 	candidate: CandidateDetail | null;
+	editCandidate: Function
 }
 
 const CandidateDetailComponent = (props: CandidateDetailProps) => {
@@ -53,15 +52,6 @@ const CandidateDetailComponent = (props: CandidateDetailProps) => {
 		return skills.filter((elem: StatusObj) => elem.value && items.includes(elem.value))
 	}
 
-	const laststatus = (statuses: string[] | undefined) => {
-		if (!statuses) {
-			return [];
-		} else if (expandCandidateStatus) {
-			return statuses;
-		} else {
-			return [statuses[0]]
-		}
-	}
 
 	const toggleCandidateStatus = () => {
 		setExpandCandidateStatus(!expandCandidateStatus)
@@ -81,28 +71,10 @@ const CandidateDetailComponent = (props: CandidateDetailProps) => {
 		}, 1000);
 	}
 
-	const getStatusView = (candidate: CandidateDetail) => {
-		return (
-			<>
-				<div className="cdb-status-box">
-					{laststatus(candidate.candidateStatus).map((status, index) => (
-						<div className="cdb-status-item" key={`cdb-status-${index}`}>
-							<CampaignRoundedIcon />
-							<div className="cdb-status-val">{status}</div>
-						</div>
-					))}
-				</div>
-				<div className="cbd-sts-toggle" onClick={toggleCandidateStatus}>
-					{!expandCandidateStatus && <KeyboardArrowDownRoundedIcon />}
-					{expandCandidateStatus && <KeyboardArrowUpRoundedIcon />}
-				</div>
-			</>
-		)
+	const editCandidate = () => {
+		props.editCandidate(candidate)
 	}
 
-	const handleAddComment = (candidateId: any) => {
-		console.log(commentValue)
-	}
 
 	return (
 		<div className={`candidate-detail-container h-full`}>
@@ -112,15 +84,18 @@ const CandidateDetailComponent = (props: CandidateDetailProps) => {
 				</div>
 			) : (
 				<>
-					<section className="flex p-4 justify-end">
+					<section className="flex p-4 justify-end space-x-1">
 						<a className="cdb-download-btn flex items-center border rounded-lg text-xs space-x-2 p-1" href={candidate.resumeUrl} target="_blank" download>
-							<div className="cdb-download-btn-text">Download Resume</div> <CloudDownloadRoundedIcon fontSize="small" />
+							<CloudDownloadRoundedIcon fontSize="small" /> <div className="cdb-download-btn-text">Download Resume</div>
 						</a>
+						<div className="cdb-download-btn flex items-center border rounded-lg text-xs space-x-1 p-1 cursor-pointer" onClick={editCandidate}>
+							<EditIcon fontSize="small" /> <div className="cdb-download-btn-text">Edit</div>
+						</div>
 					</section>
 
 					<section className="p-5 flex items-center justify-center border-t w-full">
 						<div className="w-2/3">
-							<div className="text-xl font-bold capitalize tecnitaBlue">{candidate.firstName} {candidate.lastName}</div>
+							<div className="text-xl font-bold capitalize tecnitaBlue">{candidate.firstName}{' '}{candidate.lastName}</div>
 							<div className="text-base text-color-lite">{candidate.jobTitle}</div>
 						</div>
 						<div className="w-1/3 text-sm space-y-2">
