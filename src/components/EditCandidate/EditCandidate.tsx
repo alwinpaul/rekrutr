@@ -117,9 +117,9 @@ const editCandidateSchema = Yup.object().shape({
             unit: Yup.string()
         }))
         .min(1, 'Required'),
-    source: Yup.string(),
-    website: Yup.string(),
-    linkedIn: Yup.string()
+    source: Yup.string().notRequired(),
+    website: Yup.string().notRequired(),
+    linkedIn: Yup.string().notRequired()
 });
 
 interface EditCandidateProps {
@@ -158,9 +158,7 @@ const EditCandidate = (props: EditCandidateProps) => {
             if ((resp.type == "candidate/editDetail/fulfilled")) {
                 dispatch(getCandidateDetails());
                 formik.resetForm();
-                setTimeout(() => {
-                    props.closeModal()
-                }, 7000);
+                props.closeModal()
             } else if (resp.type == "candidate/editDetail/rejected") {
                 alert("Something went wrong....Couldn't save data")
             }
@@ -807,13 +805,6 @@ const EditCandidate = (props: EditCandidateProps) => {
                                 variant="outlined"
                                 fullWidth
                                 name="linkedIn"
-                                error={
-                                    formik.touched.linkedIn &&
-                                    Boolean(formik.errors.linkedIn)
-                                }
-                                helperText={
-                                    formik.touched.linkedIn && formik.errors.linkedIn
-                                }
                                 value={formik.values.linkedIn}
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
@@ -835,13 +826,6 @@ const EditCandidate = (props: EditCandidateProps) => {
                                 variant="outlined"
                                 fullWidth
                                 name="website"
-                                error={
-                                    formik.touched.website &&
-                                    Boolean(formik.errors.website)
-                                }
-                                helperText={
-                                    formik.touched.website && formik.errors.website
-                                }
                                 value={formik.values.website}
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
@@ -863,13 +847,6 @@ const EditCandidate = (props: EditCandidateProps) => {
                                 variant="outlined"
                                 fullWidth
                                 name="source"
-                                error={
-                                    formik.touched.source &&
-                                    Boolean(formik.errors.source)
-                                }
-                                helperText={
-                                    formik.touched.source && formik.errors.source
-                                }
                                 value={formik.values.source}
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
