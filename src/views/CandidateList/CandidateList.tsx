@@ -39,6 +39,7 @@ const CandidateList = () => {
 	return (
 		<div className="candidate-details-view">
 			<div className="candidate-list-box">
+				<div className="text-xs font-bold text-right p-2 text-white"> Total Candidates : {candidates.length}</div>
 				{candidates.map((candidate: CandidateDetail, index) => (
 					<CandidateCard candidate={candidate} isActive={selectedCandidate?.id === candidate.id} key={index}></CandidateCard>
 				))}
