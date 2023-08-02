@@ -12,7 +12,7 @@ export interface CandidateState {
 	salaryUnits: string[];
 	industryVerticals: StatusObj[];
 	selectedCandidate?: CandidateDetail;
-	currency: CurrencyObj[]
+	currencies: CurrencyObj[]
 }
 
 const initialState: CandidateState = {
@@ -25,7 +25,7 @@ const initialState: CandidateState = {
 	salaryUnits: [],
 	industryVerticals: [],
 	selectedCandidate: undefined,
-	currency: []
+	currencies: []
 };
 
 export const candidateSlice = createSlice({
@@ -51,7 +51,7 @@ export const candidateSlice = createSlice({
 			state.skills = [...action.payload.skills];
 			state.salaryUnits = [...action.payload.salary_units];
 			state.industryVerticals = [...action.payload.industry_verticals];
-			state.currency = [...action.payload.currency];
+			state.currencies = [...action.payload.currency];
 		});
 	},
 });

@@ -692,7 +692,7 @@ const AddCandidateBasic = (props: AddCandidateBasicProps) => {
 									onChange={formik.handleChange}
 									onBlur={formik.handleBlur}
 								>
-									{candidateState.currency.map((currencyItem, index) => (
+									{candidateState.currencies.map((currencyItem, index) => (
 										<MenuItem value={currencyItem.id} key={`unit-${index}`}>{currencyItem.value}</MenuItem>
 									))}
 								</TextField>

@@ -112,7 +112,10 @@ export const getCandidateDetails = createAsyncThunk(
                 roles: candidateDetail.roles,
                 skills: candidateDetail.skills,
                 comments: candidateDetail.comments,
-                candidateStatus: candidateDetail.candidate_status
+                candidateStatus: candidateDetail.candidate_status,
+                linkedIn: candidateDetail.linkedInURL,
+                website: candidateDetail.websiteURL,
+                source: candidateDetail.referralSource
             })
         );
 

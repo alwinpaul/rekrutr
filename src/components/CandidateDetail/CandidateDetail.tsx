@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { CandidateDetail, StatusObj } from "./../../common/interfaces/candidateInterface";
+import { CandidateDetail, StatusObj, CurrencyObj } from "./../../common/interfaces/candidateInterface";
 import { RootState } from "./../../store/store";
 
 import CallRoundedIcon from '@mui/icons-material/CallRounded';
@@ -25,7 +25,7 @@ const CandidateDetailComponent = (props: CandidateDetailProps) => {
 	const [openPhoneCopyToolTip, setPhoneOpenCopyTooltip] = useState(false);
 	const [openEmailCopyToolTip, setEmailOpenCopyTooltip] = useState(false);
 
-	let { candidates, visaStatus, employmentTypes, roles, skills, salaryUnits, industryVerticals, technologies } = useSelector(
+	let { candidates, visaStatus, employmentTypes, roles, skills, salaryUnits, industryVerticals, technologies, currencies } = useSelector(
 		(state: RootState) => state.candidates
 	);
 	const visaStatusMap = (id: number) => {
@@ -73,6 +73,11 @@ const CandidateDetailComponent = (props: CandidateDetailProps) => {
 
 	const editCandidate = () => {
 		props.editCandidate(candidate)
+	}
+
+	const getCurrencyValue = (id: number | undefined) => {
+		if (!id) return ""
+		return currencies.filter((curr: CurrencyObj) => curr.id === id)[0].value
 	}
 
 
@@ -197,7 +202,7 @@ const CandidateDetailComponent = (props: CandidateDetailProps) => {
 							<div className="flex items-center space-x-2 w-2/3">
 								<div className="cdb-con-item-text flex space-x-4">
 									{candidate.salaryExpectations.map((sal, index) => (
-										<div key={`sal-${index}`} className="" >{sal.value} {sal.unit}</div>
+										<div key={`sal-${index}`} className="" >{sal.value} {getCurrencyValue(sal.currency)} {sal.unit}</div>
 									))}
 								</div>
 							</div>
@@ -265,6 +270,38 @@ const CandidateDetailComponent = (props: CandidateDetailProps) => {
 							</div>
 						</div>
 
+						{candidate.linkedIn &&
+							<div className="flex items-center justify-start">
+								<div className="title w-1/3 font-bold">LinkedIN Url</div>
+								<div className="flex items-center space-x-2 w-2/3">
+									<a href={candidate.linkedIn} target="_blank" className="cdb-con-item-text">
+										{candidate.linkedIn}
+									</a>
+								</div>
+							</div>
+						}
+
+						{candidate.website &&
+							<div className="flex items-center justify-start">
+								<div className="title w-1/3 font-bold">Website</div>
+								<div className="flex items-center space-x-2 w-2/3">
+									<a href={candidate.website} target="_blank" className="cdb-con-item-text">
+										{candidate.website}
+									</a>
+								</div>
+							</div>
+						}
+
+						{candidate.source &&
+							<div className="flex items-center justify-start">
+								<div className="title w-1/3 font-bold">Referral / Source</div>
+								<div className="flex items-center space-x-2 w-2/3">
+									<div className="cdb-con-item-text">
+										{candidate.source}
+									</div>
+								</div>
+							</div>
+						}
 					</section>
 				</>
 			)}

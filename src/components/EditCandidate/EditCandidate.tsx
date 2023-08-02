@@ -113,7 +113,7 @@ const editCandidateSchema = Yup.object().shape({
     salaryExpectations: Yup.array()
         .of(Yup.object().shape({
             value: Yup.number(),
-            currency: Yup.string(),
+            currency: Yup.string().required(),
             unit: Yup.string()
         }))
         .min(1, 'Required'),
@@ -197,12 +197,18 @@ const EditCandidate = (props: EditCandidateProps) => {
         })
     }
 
+    const testSubmit = (e: any) => {
+        e.preventDefault();
+        console.log(formik)
+    }
+
 
 
     return (
         <section className="candidate-container m-auto bg-white relative pb-10 pt-10">
             <div className="candidate-form">
                 <form onSubmit={formik.handleSubmit}>
+                    {/* <form onSubmit={testSubmit}> */}
                     <h3 className="section-title text-xl font-bold m-4">Basic Details</h3>
                     <InputCard name="Name" cardDescription="Enter first and last name">
                         <Box
@@ -663,6 +669,11 @@ const EditCandidate = (props: EditCandidateProps) => {
                                         value={formik.values.salaryExpectations[index].value}
                                         onChange={formik.handleChange}
                                         onBlur={formik.handleBlur}
+                                        error={
+                                            Boolean(formik.errors.salaryExpectations &&
+                                                formik.errors.salaryExpectations[index])
+                                        }
+                                        helperText={formik.errors.salaryExpectations && 'required'}
                                     />
                                     <TextField
                                         className="input-field"
@@ -674,8 +685,13 @@ const EditCandidate = (props: EditCandidateProps) => {
                                         value={formik.values.salaryExpectations[index].currency}
                                         onChange={formik.handleChange}
                                         onBlur={formik.handleBlur}
+                                        error={
+                                            Boolean(formik.errors.salaryExpectations &&
+                                                formik.errors.salaryExpectations[index])
+                                        }
+                                        helperText={formik.errors.salaryExpectations && 'required'}
                                     >
-                                        {candidateState.currency.map((currencyItem, index) => (
+                                        {candidateState.currencies.map((currencyItem, index) => (
                                             <MenuItem value={currencyItem.id} key={`unit-${index}`}>{currencyItem.value}</MenuItem>
                                         ))}
                                     </TextField>
@@ -689,6 +705,12 @@ const EditCandidate = (props: EditCandidateProps) => {
                                         value={formik.values.salaryExpectations[index].unit}
                                         onChange={formik.handleChange}
                                         onBlur={formik.handleBlur}
+                                        error={
+                                            Boolean(formik.errors.salaryExpectations &&
+                                                formik.errors.salaryExpectations[index])
+                                        }
+                                        helperText={formik.errors.salaryExpectations && 'required'}
+
                                     >
                                         {candidateState.salaryUnits.map((unit, index) => (
                                             <MenuItem value={unit} key={`unit-${index}`}>{unit}</MenuItem>
@@ -696,7 +718,6 @@ const EditCandidate = (props: EditCandidateProps) => {
                                     </TextField>
 
                                 </Box>
-
                             </>
                         ))}
                     </InputCard>
