@@ -42,6 +42,9 @@ export const candidateSlice = createSlice({
 		});
 		builder.addCase(getCandidateDetails.fulfilled, (state, action) => {
 			state.candidates = [...action.payload];
+			if (state.selectedCandidate && state.selectedCandidate.id) {
+				state.selectedCandidate = { ...action.payload.filter(candidate => candidate.id === state.selectedCandidate?.id)[0] }
+			}
 		});
 		builder.addCase(getConfig.fulfilled, (state, action) => {
 			state.visaStatus = [...action.payload.visa_status];

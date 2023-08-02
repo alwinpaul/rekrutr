@@ -8,6 +8,7 @@ import EmailRoundedIcon from '@mui/icons-material/EmailRounded';
 import CloudDownloadRoundedIcon from '@mui/icons-material/CloudDownloadRounded';
 import EditIcon from '@mui/icons-material/Edit';
 import Tooltip from '@mui/material/Tooltip';
+import { formatPhoneNumber, salaryUnitShort, noticePeriodText } from './../../utils/utils';
 
 import "./CandidateDetail.scss";
 import { useState } from "react";
@@ -117,7 +118,7 @@ const CandidateDetailComponent = (props: CandidateDetailProps) => {
 									title="Phone Number copied"
 								>
 									<a href={`tel:+1${candidate.phone}`} className="copy-text-field" onClick={() => copyText("phone", candidate?.phone)}>
-										{candidate.phone}
+										{formatPhoneNumber(candidate.phone)}
 									</a>
 								</Tooltip>
 							</div>
@@ -170,7 +171,7 @@ const CandidateDetailComponent = (props: CandidateDetailProps) => {
 							<div className="title w-1/3 font-bold">Notice Period</div>
 							<div className="flex items-center space-x-2 w-2/3">
 								<div className="cdb-con-item-text">
-									{candidate.noticePeriod} days
+									{noticePeriodText(candidate.noticePeriod)}
 								</div>
 							</div>
 						</div>
@@ -202,7 +203,7 @@ const CandidateDetailComponent = (props: CandidateDetailProps) => {
 							<div className="flex items-center space-x-2 w-2/3">
 								<div className="cdb-con-item-text flex space-x-4">
 									{candidate.salaryExpectations.map((sal, index) => (
-										<div key={`sal-${index}`} className="" >{sal.value} {getCurrencyValue(sal.currency)} {sal.unit}</div>
+										<div key={`sal-${index}`} className="" >{sal.value.toLocaleString()} {getCurrencyValue(sal.currency)} {salaryUnitShort(sal.unit)}</div>
 									))}
 								</div>
 							</div>

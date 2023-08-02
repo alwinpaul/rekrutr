@@ -18,7 +18,7 @@ import { editCandidateDetails, getCandidateDetails, uploadResumeFile } from "../
 import Autocomplete from "@mui/material/Autocomplete";
 import { useSelector } from "react-redux";
 import { CandidateState } from "../../store/reducers/candidateSlice";
-import { CircularProgress } from "@mui/material";
+import { ButtonGroup, CircularProgress, ToggleButton, ToggleButtonGroup } from "@mui/material";
 
 import "./EditCandidate.scss";
 
@@ -199,6 +199,10 @@ const EditCandidate = (props: EditCandidateProps) => {
         e.preventDefault();
         console.log(formik)
     }
+
+    const handleNoticeChange = (event: any, val: number) => {
+        formik.setFieldValue('noticePeriod', val);
+    };
 
 
 
@@ -588,16 +592,40 @@ const EditCandidate = (props: EditCandidateProps) => {
                     </InputCard>
 
                     <InputCard name="Notice Period">
+
+                        <ToggleButtonGroup
+                            color="primary"
+                            value={formik.values.noticePeriod}
+                            exclusive
+                            onChange={handleNoticeChange}
+                            aria-label="Platform"
+                            id="noticePeriod"
+                        >
+                            <ToggleButton value={0}>
+                                Immediate
+                            </ToggleButton>
+                            <ToggleButton value={14}>
+                                2 weeks
+                            </ToggleButton>
+                            <ToggleButton value={31}>
+                                1 month
+                            </ToggleButton>
+                            <ToggleButton value={61}>
+                                2 months
+                            </ToggleButton>
+                        </ToggleButtonGroup>
+
+                        <div className="flex items-center justify-center p-2 text-xs"> - or - </div>
                         <Box
                             component="div"
                             sx={{
-                                "& > :not(style)": { mr: 1, width: "61ch" },
+                                "& > :not(style)": { mr: 1, width: "16ch" },
                             }}
                         >
                             <TextField
                                 className="input-field"
                                 id="notice"
-                                label="Notice Period (Days)"
+                                label="Number of Days"
                                 variant="outlined"
                                 fullWidth
                                 name="noticePeriod"
@@ -613,6 +641,7 @@ const EditCandidate = (props: EditCandidateProps) => {
                                 onBlur={formik.handleBlur}
                             />
                         </Box>
+
                     </InputCard>
 
                     <InputCard name="Visa Status">
