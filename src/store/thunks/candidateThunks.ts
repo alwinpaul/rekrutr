@@ -32,6 +32,8 @@ const createCandidateData = (candidateDetails: CandidateDetail) => {
         source
     } = candidateDetails;
 
+
+
     const total_exp = expYears * 12 + expMonths;
 
     const comments: any = [];
@@ -97,8 +99,8 @@ export const getCandidateDetails = createAsyncThunk(
                 email: candidateDetail.email,
                 phone: candidateDetail.phone,
                 jobTitle: candidateDetail.job_title,
-                expYears: (candidateDetail.total_exp_months / 12).toFixed(),
-                expMonths: (candidateDetail.total_exp_months % 12).toFixed(),
+                expYears: Math.floor(candidateDetail.total_exp_months / 12),
+                expMonths: Math.floor(candidateDetail.total_exp_months % 12),
                 expertise: candidateDetail.expertise,
                 summary: candidateDetail.job_summary,
                 industryVerticals: candidateDetail.industry_verticals,
@@ -113,9 +115,9 @@ export const getCandidateDetails = createAsyncThunk(
                 skills: candidateDetail.skills,
                 comments: candidateDetail.comments,
                 candidateStatus: candidateDetail.candidate_status,
-                linkedIn: candidateDetail.linkedInURL,
-                website: candidateDetail.websiteURL,
-                source: candidateDetail.referralSource
+                linkedIn: candidateDetail.linkedInURL || "",
+                website: candidateDetail.websiteURL || "",
+                source: candidateDetail.referralSource || ""
             })
         );
 

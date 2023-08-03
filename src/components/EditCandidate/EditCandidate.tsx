@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useFormik, ErrorMessage } from "formik";
+import { useState, Fragment } from "react";
+import { useFormik } from "formik";
 import * as Yup from "yup";
 import { RootState, useAppDispatch } from "./../../store/store";
 import InputCard from "./../../components/InputCard/InputCard";
@@ -18,7 +18,7 @@ import { editCandidateDetails, getCandidateDetails, uploadResumeFile } from "../
 import Autocomplete from "@mui/material/Autocomplete";
 import { useSelector } from "react-redux";
 import { CandidateState } from "../../store/reducers/candidateSlice";
-import { ButtonGroup, CircularProgress, ToggleButton, ToggleButtonGroup } from "@mui/material";
+import { CircularProgress, ToggleButton, ToggleButtonGroup } from "@mui/material";
 
 import "./EditCandidate.scss";
 
@@ -339,7 +339,7 @@ const EditCandidate = (props: EditCandidateProps) => {
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
                             >
-                                {[...Array(100)].map((option, index) => (
+                                {[...Array(99)].map((option, index) => (
                                     <MenuItem key={index} value={index}>
                                         {index} {`year${index > 1 ? "s" : ""}`}
                                     </MenuItem>
@@ -363,7 +363,7 @@ const EditCandidate = (props: EditCandidateProps) => {
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
                             >
-                                {[...Array(13)].map((option, index) => (
+                                {[...Array(12)].map((option, index) => (
                                     <MenuItem key={index} value={index}>
                                         {index} {`month${index > 1 ? "s" : ""}`}
                                     </MenuItem>
@@ -679,7 +679,7 @@ const EditCandidate = (props: EditCandidateProps) => {
 
                     <InputCard name="Income Expectation">
                         {formik.values.salaryExpectations && formik.values.salaryExpectations.map((se, index) => (
-                            <>
+                            <Fragment key={index}>
                                 <Box
                                     component="div"
                                     sx={{
@@ -745,7 +745,7 @@ const EditCandidate = (props: EditCandidateProps) => {
                                     </TextField>
 
                                 </Box>
-                            </>
+                            </Fragment>
                         ))}
                     </InputCard>
 
