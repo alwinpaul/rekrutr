@@ -9,7 +9,7 @@ export const get = (url: string, header?: any) => {
     }
   };
 
-  let accessTkn = localStorage.getItem('auth_token');
+  let accessTkn = localStorage.getItem('_aut-tt');
   if (accessTkn) {
     config.headers['x-access-token'] = accessTkn
   }
@@ -26,7 +26,7 @@ export const post = (url: string, data: any, header: any = {}) => {
     }
   };
 
-  let accessTkn = localStorage.getItem('auth_token');
+  let accessTkn = localStorage.getItem('_aut-tt');
   if (accessTkn) {
     config.headers['x-access-token'] = accessTkn
   }

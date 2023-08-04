@@ -1,14 +1,7 @@
 .header {
-  width: 100%;
-  height: 50px;
-  display: flex;
-  align-items: flex-start;
-  border-bottom: 1px solid var(--border);
-  position: fixed;
   z-index: 2;
   top: 0;
   left: 0;
-  background-color: var(--white);
 }
 
 .logo-box {

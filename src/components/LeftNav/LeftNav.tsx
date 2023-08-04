@@ -120,26 +120,6 @@ const LeftNav = () => {
         </Collapse>
       </List>
 
-      <div className="actions-sc">
-        <Button
-          className="btn"
-          variant="text"
-          size="small"
-          component={Link}
-          to="/candidates/add"
-        >
-          <PersonAddAltIcon className="btn-icon" /> Add Candidate
-        </Button>
-        <Button
-          className="btn"
-          variant="text"
-          size="small"
-          component={Link}
-          to="/jobs/add"
-        >
-          <WorkIcon className="btn-icon" /> Add Job
-        </Button>
-      </div>
     </nav>
   );
 };

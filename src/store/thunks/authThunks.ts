@@ -37,3 +37,10 @@ export const signIn = createAsyncThunk(
 
     }
 );
+
+export const signOut = createAsyncThunk(
+    "auth/signOut",
+    async (thunkAPI) => {
+        return true
+    }
+);

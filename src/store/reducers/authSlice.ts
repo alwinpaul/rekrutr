@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { validateLogin, signIn } from '../thunks/authThunks';
+import { validateLogin, signIn, signOut } from '../thunks/authThunks';
 
 
 export interface authSliceInterface {
@@ -13,11 +13,25 @@ export interface authSliceInterface {
 
 const initialState: authSliceInterface = {
   tokenValid: false,
-  name: "",
+  name: localStorage.getItem('name') || "",
   email: localStorage.getItem('email') || "",
-  role: "",
-  token: localStorage.getItem('auth_token') || "",
+  role: localStorage.getItem('role') || "",
+  token: localStorage.getItem('_aut-tt') || "",
 };
+
+const addUserToLocalStorage = (userData: any) => {
+  localStorage.setItem("_aut-tt", userData.accessToken)
+  localStorage.setItem("name", userData.name)
+  localStorage.setItem("role", userData.role)
+  localStorage.setItem("email", userData.email)
+}
+
+const clearUserFromLocalStorage = () => {
+  localStorage.removeItem("_aut-tt")
+  localStorage.removeItem("name")
+  localStorage.removeItem("role")
+  localStorage.removeItem("email")
+}
 
 
 export const authSlice = createSlice({
@@ -35,12 +49,16 @@ export const authSlice = createSlice({
         state.email = action.payload.email;
         state.role = action.payload.role;
         state.token = action.payload.accessToken;
+        addUserToLocalStorage(action.payload)
         state.tokenValid = true;
-        localStorage.setItem("auth_token", action.payload.accessToken)
-        localStorage.setItem("email", action.payload.email)
       } else {
         state.tokenValid = false;
       }
+    });
+
+    builder.addCase(signOut.fulfilled, (state, action) => {
+      clearUserFromLocalStorage()
+      state.tokenValid = false;
     });
 
   },

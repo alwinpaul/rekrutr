@@ -18,7 +18,8 @@ export default function SignIn() {
         setPass(evt.target.value)
     }
 
-    const handleSignIn = () => {
+    const handleSignIn = (e: any) => {
+        e.preventDefault();
         dispatch(signIn({
             email: username,
             password: pass
@@ -37,7 +38,7 @@ export default function SignIn() {
             <div className="absolute top-2 left-2">
                 <img src="/img/tecnita_logo.png" alt="tecnita logo" className='h-8 w-8' />
             </div>
-            <div className="sic-box w-96 h-48 border border-gray-800/50 rounded-md p-4">
+            <form className="sic-box w-96 h-48 border border-gray-800/50 rounded-md p-4" onSubmit={handleSignIn}>
                 <div className="sic-field flex items-center justify-start m-2">
                     <div className="label w-1/3">Email : </div>
                     <div className="inputf w-2/3">
@@ -51,9 +52,9 @@ export default function SignIn() {
                     </div>
                 </div>
                 <div className="btn flex justify-end m-4">
-                    <Button variant="contained" className="ml-24" size='large' onClick={handleSignIn}>Login</Button>
+                    <Button variant="contained" className="ml-24" size='large' type="submit">Login</Button>
                 </div>
-            </div>
+            </form>
         </section>
     )
 }
