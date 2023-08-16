@@ -67,7 +67,7 @@ const LeftNav = () => {
           <ListItemIcon>
             <PersonRoundedIcon />
           </ListItemIcon>
-          <ListItemText primary="Candiate" />
+          <ListItemText primary="Candidate" />
           {openCandidate ? <ExpandLess /> : <ExpandMore />}
         </ListItemButton>
         <Collapse in={openCandidate} timeout="auto" unmountOnExit>

@@ -41,7 +41,7 @@ const ProfileActions = (props: ProfileActionsInterface) => {
 
     return (
         <>
-            <div className={props.className || "" + " relative"}>
+            <div className={props.className || "" + " fixed top-0"}>
                 <div className="w-48 h-auto flex items-center justify-start cursor-pointer" onClick={() => setShowMenu(!showMenu)}>
                     <div className="w-8 h-8 flex items-center uppercase justify-center border font-bold text-xs text-white bg-tecnita-blue rounded-full m-2 ">{getInitials(props.userName)}</div>
                     <div className="text-tecnita-blue truncate w-40 font-semibold capitalize">{props.userName}</div>
