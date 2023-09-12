@@ -1,6 +1,6 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { RolesObj, CandidateDetail, StatusObj, CurrencyObj } from "./../../common/interfaces/candidateInterface";
-import { addCandidateDetails, getCandidateDetails, getConfig } from "../thunks/candidateThunks";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { RolesObj, CandidateDetail, StatusObj, CurrencyObj, filterOptions } from "./../../common/interfaces/candidateInterface";
+import { addCandidateDetails, filterCandidates, getCandidateDetails, getConfig } from "../thunks/candidateThunks";
 
 export interface CandidateState {
 	candidates: CandidateDetail[];
@@ -12,7 +12,8 @@ export interface CandidateState {
 	salaryUnits: string[];
 	industryVerticals: StatusObj[];
 	selectedCandidate?: CandidateDetail;
-	currencies: CurrencyObj[]
+	currencies: CurrencyObj[];
+	filter: filterOptions
 }
 
 const initialState: CandidateState = {
@@ -25,7 +26,13 @@ const initialState: CandidateState = {
 	salaryUnits: [],
 	industryVerticals: [],
 	selectedCandidate: undefined,
-	currencies: []
+	currencies: [],
+	filter: {
+		searchText: '',
+		industryVertical: undefined,
+		technology: undefined,
+		skills: undefined
+	}
 };
 
 export const candidateSlice = createSlice({
@@ -34,6 +41,9 @@ export const candidateSlice = createSlice({
 	reducers: {
 		selectCandidate(state, action) {
 			state.selectedCandidate = { ...action.payload }
+		},
+		setFilter(state, action: PayloadAction<filterOptions>) {
+			state.filter = action.payload;
 		}
 	},
 	extraReducers: (builder) => {
@@ -56,7 +66,10 @@ export const candidateSlice = createSlice({
 			state.industryVerticals = [...action.payload.industry_verticals];
 			state.currencies = [...action.payload.currency];
 		});
+		builder.addCase(filterCandidates.fulfilled, (state, action) => {
+			state.candidates = [...action.payload];
+		});
 	},
 });
 export default candidateSlice.reducer;
-export const { selectCandidate } = candidateSlice.actions
+export const { selectCandidate, setFilter } = candidateSlice.actions

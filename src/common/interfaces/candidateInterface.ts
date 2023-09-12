@@ -72,3 +72,10 @@ export interface Location {
 	long?: string;
 	placeId?: string;
 }
+
+export interface filterOptions {
+	searchText?: string;
+	industryVertical?: Array<number> | undefined;
+	technology?: Array<number> | undefined;
+	skills?: Array<number> | undefined;
+}

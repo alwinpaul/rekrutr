@@ -14,7 +14,7 @@ const SearchBox = () => {
 
             <Overlay isOpen={showFilter} closeModal={() => setShowFilter(false)}>
                 <div className="absolute top-14 w-full">
-                    <FilterMenu />
+                    <FilterMenu closeModal={() => setShowFilter(false)} />
                 </div>
             </Overlay>
 

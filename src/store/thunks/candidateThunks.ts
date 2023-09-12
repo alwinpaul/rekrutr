@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { CandidateDetail } from "../../common/interfaces/candidateInterface";
+import { CandidateDetail, filterOptions } from "../../common/interfaces/candidateInterface";
 import apiUrls from "../../common/apiUrls";
 import { post, get } from "./../../utils/apiUtils";
 import { AxiosResponse } from "axios";
@@ -86,41 +86,44 @@ export const editCandidateDetails = createAsyncThunk(
     }
 );
 
+const getCandidateDetailsMap = (candidateDetails: any) => {
+    return candidateDetails.map(
+        (candidateDetail: any) => ({
+            id: candidateDetail.id,
+            firstName: candidateDetail.first_name,
+            lastName: candidateDetail.last_name,
+            email: candidateDetail.email,
+            phone: candidateDetail.phone,
+            jobTitle: candidateDetail.job_title,
+            expYears: Math.floor(candidateDetail.total_exp_months / 12),
+            expMonths: Math.floor(candidateDetail.total_exp_months % 12),
+            expertise: candidateDetail.expertise,
+            summary: candidateDetail.job_summary,
+            industryVerticals: candidateDetail.industry_verticals,
+            visaStatus: candidateDetail.visa_status,
+            noticePeriod: candidateDetail.notice_period_days,
+            salaryExpectations: candidateDetail.salary_expectations,
+            employmentTypes: candidateDetail.employment_types,
+            location: candidateDetail.location,
+            resumeUrl: candidateDetail.resume_url,
+            technologies: candidateDetail.technologies,
+            roles: candidateDetail.roles,
+            skills: candidateDetail.skills,
+            comments: candidateDetail.comments,
+            candidateStatus: candidateDetail.candidate_status,
+            linkedIn: candidateDetail.linkedInURL || "",
+            website: candidateDetail.websiteURL || "",
+            source: candidateDetail.referralSource || ""
+        })
+    )
+}
+
 export const getCandidateDetails = createAsyncThunk(
     "candidate/fetchAll",
     async (thunkAPI) => {
         const response = await get(apiUrls.GET_CANDIDATES);
         const candidateDetails = response?.data ?? [];
-        const candidateData: CandidateDetail[] = candidateDetails.map(
-            (candidateDetail: any) => ({
-                id: candidateDetail.id,
-                firstName: candidateDetail.first_name,
-                lastName: candidateDetail.last_name,
-                email: candidateDetail.email,
-                phone: candidateDetail.phone,
-                jobTitle: candidateDetail.job_title,
-                expYears: Math.floor(candidateDetail.total_exp_months / 12),
-                expMonths: Math.floor(candidateDetail.total_exp_months % 12),
-                expertise: candidateDetail.expertise,
-                summary: candidateDetail.job_summary,
-                industryVerticals: candidateDetail.industry_verticals,
-                visaStatus: candidateDetail.visa_status,
-                noticePeriod: candidateDetail.notice_period_days,
-                salaryExpectations: candidateDetail.salary_expectations,
-                employmentTypes: candidateDetail.employment_types,
-                location: candidateDetail.location,
-                resumeUrl: candidateDetail.resume_url,
-                technologies: candidateDetail.technologies,
-                roles: candidateDetail.roles,
-                skills: candidateDetail.skills,
-                comments: candidateDetail.comments,
-                candidateStatus: candidateDetail.candidate_status,
-                linkedIn: candidateDetail.linkedInURL || "",
-                website: candidateDetail.websiteURL || "",
-                source: candidateDetail.referralSource || ""
-            })
-        );
-
+        const candidateData: CandidateDetail[] = getCandidateDetailsMap(candidateDetails);
         return candidateData;
     }
 );
@@ -145,6 +148,17 @@ export const uploadResumeFile = createAsyncThunk(
         formData.append("resumeFile", resumeFile, resumeFile.name);
         const response = await post(apiUrls.UPLOAD_RESUME, formData);
         return response?.data;
+    }
+);
+
+
+export const filterCandidates = createAsyncThunk(
+    "candidate/filterCandidate",
+    async (filterData: filterOptions, thunkAPI) => {
+        const response: AxiosResponse = await post(apiUrls.FILTER_CANDIDATE, filterData);
+        const candidateDetails = response?.data ?? [];
+        const candidateData: CandidateDetail[] = getCandidateDetailsMap(candidateDetails);
+        return candidateData;
     }
 );
 

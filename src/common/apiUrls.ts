@@ -10,6 +10,7 @@ const apiUrls = {
   UPLOAD_RESUME: `${get_domain}/api/uploadResume`,
   VALIDATE_LOGIN: `${get_domain}/api/auth/validate`,
   LOGIN: `${get_domain}/api/auth/signin`,
+  FILTER_CANDIDATE: `${get_domain}/api/candidates/filter`,
 };
 
 export default apiUrls;
