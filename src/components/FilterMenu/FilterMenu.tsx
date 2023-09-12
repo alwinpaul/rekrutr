@@ -134,7 +134,7 @@ const FilterMenu = (props: FilterMenuPropsInterface) => {
                             Skills
                         </div>
                     </div>
-                    <div className="w-3/4 ml-2 bg-gray-200 h-96 rounded-lg">
+                    <div className="w-3/4 ml-2 bg-gray-200 h-96 rounded-lg overflow-y-auto">
                         {selectedFilterMenu === 0 && (
                             candidateState.industryVerticals.map(op => (
                                 <div className="w-1/3 inline-block p-2" key={op.value}>
