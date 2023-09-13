@@ -13,7 +13,8 @@ export interface CandidateState {
 	industryVerticals: StatusObj[];
 	selectedCandidate?: CandidateDetail;
 	currencies: CurrencyObj[];
-	filter: filterOptions
+	filter: filterOptions;
+	fetchingCandidates?: boolean;
 }
 
 const initialState: CandidateState = {
@@ -32,7 +33,8 @@ const initialState: CandidateState = {
 		industryVertical: undefined,
 		technology: undefined,
 		skills: undefined
-	}
+	},
+	fetchingCandidates: false
 };
 
 export const candidateSlice = createSlice({
@@ -50,11 +52,15 @@ export const candidateSlice = createSlice({
 		builder.addCase(addCandidateDetails.fulfilled, (state, action) => {
 			// No side effect now
 		});
+		builder.addCase(getCandidateDetails.pending, (state, action) => {
+			state.fetchingCandidates = true;
+		});
 		builder.addCase(getCandidateDetails.fulfilled, (state, action) => {
 			state.candidates = [...action.payload];
 			if (state.selectedCandidate && state.selectedCandidate.id) {
 				state.selectedCandidate = { ...action.payload.filter(candidate => candidate.id === state.selectedCandidate?.id)[0] }
 			}
+			state.fetchingCandidates = false;
 		});
 		builder.addCase(getConfig.fulfilled, (state, action) => {
 			state.visaStatus = [...action.payload.visa_status];
