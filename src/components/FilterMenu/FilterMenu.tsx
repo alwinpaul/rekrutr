@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { RootState, useAppDispatch } from "../../store/store";
-import { filterCandidates } from "../../store/thunks/candidateThunks";
+import { filterCandidates, getCandidateDetails } from "../../store/thunks/candidateThunks";
 import { CandidateState, setFilter } from "../../store/reducers/candidateSlice";
 import { useSelector } from "react-redux";
 import Checkbox from '@mui/material/Checkbox';
@@ -39,7 +39,11 @@ const FilterMenu = (props: FilterMenuPropsInterface) => {
         setSearchText(event.target.value)
     }
 
-    const handleFilterClick = () => {
+    const handleFilter = () => {
+        if (!searchText && !selectedIV && !selectedTechnology && !selectedSkills) {
+            props.closeModal();
+            return;
+        }
         const filterOptions: filterOptions = {
             searchText: searchText,
             industryVertical: selectedIV,
@@ -56,7 +60,24 @@ const FilterMenu = (props: FilterMenuPropsInterface) => {
     }
 
     const handleFilterReset = () => {
+        const filterOptions: filterOptions = {
+            searchText: '',
+            industryVertical: [],
+            technology: [],
+            skills: []
+        }
+
         setSearchText('')
+        setSelectedIV([]);
+        setSelectedTechnology([]);
+        setSelectedSkills([]);
+
+        dispatch(setFilter(filterOptions))
+        dispatch(getCandidateDetails()).then(resp => {
+            if ((resp.type == "candidate/fetchAll/fulfilled")) {
+                props.closeModal()
+            }
+        })
     }
 
     const handleFilterMenuClick = (menuIndex: number) => {
@@ -172,7 +193,7 @@ const FilterMenu = (props: FilterMenuPropsInterface) => {
             <div className="w-full h-32 p-5 flex items-center justify-end">
                 <button
                     className="bg-blue-500 p-3 text-white w-36 text-lg rounded-md ml-5"
-                    onClick={handleFilterClick}
+                    onClick={handleFilter}
                 >
                     Filter
                 </button>

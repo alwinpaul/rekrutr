@@ -7,7 +7,7 @@ const SearchBox = () => {
 
     return (
         <div className="w-1/2 relative">
-            <div className="search-input w-full h-10 rounded-md bg-transparent bg-slate-300 cursor-text text-lg flex items-center pl-3"
+            <div className="search-input w-full h-10 rounded-md bg-slate-200 cursor-text text-lg flex items-center pl-3"
                 onClick={() => setShowFilter(true)}>
                 Search or Filter Candidates
             </div>
