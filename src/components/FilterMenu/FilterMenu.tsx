@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import Checkbox from '@mui/material/Checkbox';
 import { FormControlLabel } from "@mui/material";
 import { StatusObj, filterOptions } from "../../common/interfaces/candidateInterface";
+import FilterBody from "../FilterBody/FilterBody";
 
 
 
@@ -158,35 +159,13 @@ const FilterMenu = (props: FilterMenuPropsInterface) => {
                     </div>
                     <div className="w-3/4 ml-2 bg-gray-200 h-96 rounded-lg overflow-y-auto">
                         {selectedFilterMenu === 0 && (
-                            candidateState.industryVerticals.map(op => (
-                                <div className="w-1/3 inline-block p-2" key={op.value}>
-                                    <FormControlLabel control={
-                                        <Checkbox
-                                            checked={typeof op.id == 'number' && !!selectedIV && selectedIV.includes(op.id)}
-                                            onChange={() => op.id && handleIVSelect(op.id)} />
-                                    } label={op.value} />
-                                </div>
-                            ))
+                            <FilterBody options={candidateState.industryVerticals} selectedValues={selectedIV} handleChange={handleIVSelect} />
                         )}
                         {selectedFilterMenu === 1 && (
-                            candidateState.technologies.map(op => (
-                                <div className="w-1/3 inline-block p-2" key={op.value}>
-                                    <FormControlLabel control={<Checkbox
-                                        checked={typeof op.id == 'number' && !!selectedTechnology && selectedTechnology.includes(op.id)}
-                                        onChange={() => op.id && handleTechnologySelect(op.id)}
-                                    />} label={op.value} />
-                                </div>
-                            ))
+                            <FilterBody options={candidateState.technologies} selectedValues={selectedTechnology} handleChange={handleTechnologySelect} />
                         )}
                         {selectedFilterMenu === 2 && (
-                            candidateState.skills.map(op => (
-                                <div className="w-1/3 inline-block p-2" key={op.value}>
-                                    <FormControlLabel control={<Checkbox
-                                        checked={typeof op.id == 'number' && !!selectedSkills && selectedSkills.includes(op.id)}
-                                        onChange={() => op.id && handleSkillSelect(op.id)}
-                                    />} label={op.value} />
-                                </div>
-                            ))
+                            <FilterBody options={candidateState.skills} selectedValues={selectedSkills} handleChange={handleSkillSelect} />
                         )}
                     </div>
                 </div>
