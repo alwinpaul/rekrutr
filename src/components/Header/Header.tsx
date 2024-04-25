@@ -16,7 +16,7 @@ const Header = () => {
     return (
         <header className="header w-full h-12 drop-shadow-sm flex items-center justify-start fixed bg-white">
             <div className="logo-box w-48">
-                <img src="/img/tecnita_logo.png" alt="tecnita logo" />
+                <img src="/img/logo.svg" alt="logo" />
             </div>
             <SearchBox />
             <div className="w-1/3 flex justify-end">

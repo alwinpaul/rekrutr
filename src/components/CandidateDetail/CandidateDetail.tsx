@@ -101,7 +101,7 @@ const CandidateDetailComponent = (props: CandidateDetailProps) => {
 
 					<section className="p-5 flex items-center justify-center border-t w-full">
 						<div className="w-2/3">
-							<div className="text-xl font-bold capitalize tecnitaBlue">{candidate.firstName}{' '}{candidate.lastName}</div>
+							<div className="text-xl font-bold capitalize baseBlue">{candidate.firstName}{' '}{candidate.lastName}</div>
 							<div className="text-base text-color-lite">{candidate.jobTitle}</div>
 						</div>
 						<div className="w-1/3 text-sm space-y-2">
@@ -192,7 +192,7 @@ const CandidateDetailComponent = (props: CandidateDetailProps) => {
 							<div className="flex items-center space-x-2 w-2/3">
 								<div className="cdb-con-item-text">
 									<BulletItem bulletColor="#49a99e" bulletDisplay="inline" >
-										{visaStatusMap(candidate.visaStatus).value}
+										{/* {visaStatusMap(candidate.visaStatus).value} */}
 									</BulletItem>
 								</div>
 							</div>

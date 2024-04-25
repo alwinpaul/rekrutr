@@ -128,7 +128,7 @@ const FilterMenu = (props: FilterMenuPropsInterface) => {
                         name="searchCandidate"
                         id="searchCandidate"
                         autoFocus
-                        className="text-xl h-16 w-full p-2 pl-4 bg-slate-50 rounded-md border border-tecnita-blue"
+                        className="text-xl h-16 w-full p-2 pl-4 bg-slate-50 rounded-md border border-base-blue"
                         placeholder="Search by Candidate Name"
                         onChange={handleSearchInputChange}
                         value={searchText}

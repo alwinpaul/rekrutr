@@ -57,7 +57,7 @@ export default function CandidateCard(props: CandidateCardProps) {
         <div className={`candidate-card h-32 shadow-md border white-bg rounded-md m-4 cursor-pointer ${props.isActive ? 'active-card' : ''}`} onClick={handleCanidateSelect}>
             <div className="top h-24 flex items-start justify-center p-2">
                 <div className="left w-2/3 border-r h-full">
-                    <div className="name text-lg font-bold capitalize tecnitaBlue">{candidate.firstName} {candidate.lastName}</div>
+                    <div className="name text-lg font-bold capitalize baseBlue">{candidate.firstName} {candidate.lastName}</div>
                     <div className="text-color-lite truncate">{candidate.jobTitle}</div>
 
                     <div className="flex items-center justify-start text-xs">

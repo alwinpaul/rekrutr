@@ -49,11 +49,7 @@ const defaultFormValue: CandidateDetail = {
     skills: [],
     visaStatus: 1,
     employmentTypes: [],
-    salaryExpectations: [{
-        value: 0,
-        unit: "per_hour",
-        currency: 1
-    }],
+    salaryExpectations: [],
     resumeUrl: "",
     comments: [],
     source: "",
@@ -105,18 +101,16 @@ const editCandidateSchema = Yup.object().shape({
         .min(1, "Required"),
     technologies: Yup.array()
         .min(1, "Required"),
-    skills: Yup.array()
-        .min(1, "Required"),
+    skills: Yup.array(),
     visaStatus: Yup.number().required("Required"),
     employmentTypes: Yup.array()
         .of(Yup.number().required("Required")),
     salaryExpectations: Yup.array()
         .of(Yup.object().shape({
             value: Yup.number(),
-            currency: Yup.string().required(),
+            currency: Yup.string(),
             unit: Yup.string()
-        }))
-        .min(1, 'Required'),
+        })),
     source: Yup.string().notRequired(),
     website: Yup.string().notRequired(),
     linkedIn: Yup.string().notRequired()
